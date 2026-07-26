@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard tuân thủ quy trình - quy định</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>/*!
  * Chart.js v4.5.0
  * https://www.chartjs.org
@@ -21,97 +24,168 @@
 </script>
 <style>
 :root{
-  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  --font-mono: 'SFMono-Regular', Consolas, monospace;
-  --font-display: Georgia, 'Times New Roman', 'Noto Serif', serif;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
   --bg:#F6F8FA; --surface:#FFFFFF; --ink:#1B2733; --muted:#5C6B7A; --faint:#94A3B3; --line:#E1E7ED;
+
+  /* Thang cỡ chữ */
+  --fs-dashboard-title: 36px;
+  --fs-section-title: 28px;
+  --fs-card-title: 18px;
+  --fs-card-value: 48px;
+  --fs-normal: 16px;
+  --fs-small: 14px;
+  --fs-caption: 13px;
 }
 *{box-sizing:border-box;}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);-webkit-font-smoothing:antialiased;}
-.wrap{max-width:1180px;margin:0 auto;padding:24px 20px 56px;}
+body{
+  margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);
+  font-weight:400;font-size:var(--fs-normal);line-height:1.5;letter-spacing:0;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 24px 60px;}
 
-.topbar{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding-bottom:18px;margin-bottom:16px;border-bottom:2px solid var(--ink);flex-wrap:wrap;}
-.brand-eyebrow{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#004C85;margin:0 0 6px;font-weight:600;}
-.brand-title{font-family:var(--font-display);font-size:24px;font-weight:600;margin:0;letter-spacing:-0.01em;}
+.topbar{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding-bottom:20px;margin-bottom:8px;border-bottom:2px solid var(--ink);flex-wrap:wrap;}
+.brand-eyebrow{font-size:var(--fs-caption);font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#004C85;margin:0 0 8px;}
+.brand-title{font-size:var(--fs-dashboard-title);font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin:0;}
 
-.filter-row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-bottom:20px;}
+.refresh-row{display:flex;justify-content:flex-end;gap:8px;margin:16px 0 8px;}
+.btn-secondary, #refreshBtn{
+  font-family:var(--font);font-size:var(--fs-small);font-weight:500;color:#004C85;background:#fff;
+  border:1px solid var(--line);border-radius:6px;padding:8px 14px;cursor:pointer;letter-spacing:0;
+}
+.btn-secondary:hover, #refreshBtn:hover{background:#F0F5FA;}
+
+.status{font-size:var(--fs-caption);padding:4px 0 14px;min-height:16px;}
+.status.loading{color:var(--muted);}
+.status.error{color:#B8402A;font-weight:500;}
+
+.filter-row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-bottom:24px;}
 .selector-block{display:flex;flex-direction:column;gap:6px;}
 .selector-block.grow{flex:1;min-width:220px;}
-.selector-label{font-family:var(--font-mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:600;}
+.selector-label{font-size:var(--fs-caption);color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600;}
 .select-wrap select{
   appearance:none;-webkit-appearance:none;width:100%;
   background:var(--surface) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%23004C85" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>') no-repeat right 12px center;
-  border:1.5px solid #B9CBDA;border-radius:6px;padding:9px 34px 9px 12px;font-size:13.5px;font-weight:600;color:#1B2733;
-  font-family:var(--font-body);cursor:pointer;
+  border:1.5px solid #B9CBDA;border-radius:6px;padding:10px 36px 10px 12px;font-size:var(--fs-small);font-weight:500;color:#1B2733;
+  font-family:var(--font);cursor:pointer;letter-spacing:0;
 }
 .select-wrap select:focus{outline:none;border-color:#004C85;}
 #deptSelect{min-width:240px;}
 #yearSelect, #monthSelect{min-width:130px;}
 
-.status{font-size:12px;padding:4px 0 14px;min-height:16px;}
-.status.loading{color:var(--muted);}
-.status.error{color:#B8402A;font-weight:600;}
-.refresh-row{display:flex;justify-content:flex-end;margin:-8px 0 8px;}
-#refreshBtn{
-  font-family:var(--font-body);font-size:11.5px;font-weight:600;color:#004C85;background:#fff;
-  border:1px solid var(--line);border-radius:6px;padding:6px 12px;cursor:pointer;
+.section-title{
+  font-size:var(--fs-section-title);font-weight:600;letter-spacing:-0.01em;line-height:1.3;
+  margin:44px 0 18px;display:flex;align-items:baseline;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line);
 }
-#refreshBtn:hover{background:#F0F5FA;}
+.section-title .num{font-size:var(--fs-caption);font-weight:700;color:#004C85;letter-spacing:.06em;}
 
-.unit-strip{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:6px 0 20px;}
-.unit-name{font-family:var(--font-display);font-size:18px;}
-.unit-name span{color:#004C85;font-weight:600;}
-
-.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:28px;}
+/* --- Khối KPI --- */
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px;}
 @media(max-width:980px){.kpi-grid{grid-template-columns:repeat(3,1fr);}}
-@media(max-width:560px){.kpi-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:400px){.kpi-grid{grid-template-columns:1fr;}}
+@media(max-width:640px){.kpi-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:420px){.kpi-grid{grid-template-columns:1fr;}}
 
-.kpi-card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 14px 12px;position:relative;overflow:hidden;}
+.kpi-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 16px 16px;position:relative;overflow:hidden;}
 .kpi-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--kpi-color,#004C85);}
-.kpi-name{font-family:var(--font-display);font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.3;min-height:32px;margin-bottom:11px;}
-.kpi-na{font-size:12px;color:var(--faint);padding:10px 0;}
-.kpi-compare{display:flex;align-items:center;gap:5px;}
-.kpi-q{flex:1;text-align:center;}
-.kpi-q .q-label{font-family:var(--font-mono);font-size:9.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;}
-.kpi-q .q-value{font-family:var(--font-mono);font-size:18px;font-weight:600;}
-.kpi-q.is-current .q-label{color:var(--kpi-color,#004C85);font-weight:700;}
-.kpi-q.is-current .q-value{font-size:22px;color:var(--kpi-color,#004C85);}
-.kpi-arrow{font-size:12px;color:var(--faint);padding-bottom:2px;}
-.kpi-target{font-size:10px;color:var(--faint);margin-top:9px;text-align:center;}
-.kpi-badge-row{text-align:center;margin-top:7px;}
-.kpi-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.03em;padding:3px 9px;border-radius:3px;}
-.badge-good{background:#E7F4EC;color:#1E8A57;}
-.badge-bad{background:#FBEAE5;color:#B8402A;}
+.kpi-head{display:flex;align-items:flex-start;gap:6px;margin-bottom:10px;min-height:44px;}
+.kpi-title{font-size:16px;font-weight:600;line-height:1.35;min-width:0;flex:1;}
+.kpi-na{font-size:var(--fs-small);color:var(--faint);padding:14px 0;}
+.kpi-value{font-size:var(--fs-card-value);font-weight:500;line-height:1.1;letter-spacing:-0.02em;}
+.kpi-target-line{font-size:var(--fs-caption);color:var(--faint);margin:4px 0 12px;}
+.kpi-compare-row{display:flex;align-items:center;justify-content:space-between;font-size:var(--fs-small);color:var(--muted);padding:8px 0;border-top:1px dashed var(--line);}
+.delta-chip{font-weight:600;padding:2px 8px;border-radius:20px;font-size:var(--fs-caption);}
+.delta-up{background:#E7F4EC;color:#1E8A57;}
+.delta-down{background:#FBEAE5;color:#B8402A;}
+.delta-flat{background:#F1F4F7;color:var(--muted);}
+.kpi-caption{font-size:var(--fs-caption);color:var(--muted);margin-top:6px;line-height:1.5;}
+.kpi-caption.muted{color:var(--faint);}
+.warn-icon{color:#B8402A;font-size:14px;}
+.kpi-badge-row{margin-top:12px;}
+.kpi-badge{display:inline-block;font-size:var(--fs-caption);font-weight:600;padding:4px 10px;border-radius:4px;}
 
-.section-label{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:32px 0 13px;display:flex;align-items:center;gap:10px;}
-.section-label::before{content:attr(data-num);color:#004C85;font-weight:700;}
-.section-label::after{content:"";flex:1;height:1px;background:var(--line);}
+/* --- Tình trạng chung --- */
+.status-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:8px;}
+@media(max-width:860px){.status-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:480px){.status-grid{grid-template-columns:repeat(2,1fr);}}
+.status-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 14px;text-align:center;border-top:3px solid var(--faint);}
+.status-num{font-size:32px;font-weight:600;line-height:1.15;}
+.status-label{font-size:var(--fs-caption);color:var(--muted);margin-top:4px;font-weight:500;}
+.status-good{border-top-color:#1E8A57;} .status-good .status-num{color:#1E8A57;}
+.status-watch{border-top-color:#E07A2C;} .status-watch .status-num{color:#E07A2C;}
+.status-bad{border-top-color:#B8402A;} .status-bad .status-num{color:#B8402A;}
+.status-na{border-top-color:#94A3B3;} .status-na .status-num{color:#5C6B7A;}
 
-.chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+/* --- Biểu đồ --- */
+.chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
 @media(max-width:860px){.chart-grid{grid-template-columns:1fr;}}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 16px 12px;}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 18px 14px;}
 .card.wide{grid-column:1/-1;}
-.card h3{font-family:var(--font-display);font-size:14.5px;font-weight:600;margin:0 0 12px;}
-.legend{display:flex;gap:12px;font-size:10.5px;color:var(--muted);margin-top:6px;flex-wrap:wrap;}
-.legend-item{display:flex;align-items:center;gap:5px;}
+.card:not(.wide) .body, .card:not(.wide) .chart-empty{min-height:250px;display:flex;flex-direction:column;justify-content:center;}
+.card h3{font-size:var(--fs-card-title);font-weight:600;margin:0 0 14px;letter-spacing:-0.01em;}
+.legend{display:flex;gap:14px;font-size:var(--fs-caption);color:var(--muted);margin-top:8px;flex-wrap:wrap;}
+.legend-item{display:flex;align-items:center;gap:6px;}
 .sw{width:13px;height:9px;border-radius:2px;display:inline-block;}
-.chart-empty{font-size:12px;color:var(--faint);padding:28px 10px;text-align:center;}
+.chart-empty{font-size:var(--fs-small);color:var(--faint);padding:30px 12px;text-align:center;}
 canvas{max-height:220px;}
 
-.viol-card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 18px;}
-.viol-empty{color:var(--faint);font-size:13px;padding:6px 0;}
-table.viol-table{width:100%;border-collapse:collapse;font-size:12.5px;}
-table.viol-table th{text-align:left;font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:6px 8px;border-bottom:1.5px solid var(--line);}
-table.viol-table td{padding:8px;border-bottom:1px solid var(--line);}
+/* --- Ưu tiên cải tiến --- */
+.priority-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);}
+.priority-item:last-child{border-bottom:none;}
+.priority-icon{font-size:20px;line-height:1.4;}
+.priority-body{flex:1;}
+.priority-name{font-weight:600;font-size:var(--fs-normal);}
+.priority-section{font-weight:400;color:var(--faint);font-size:var(--fs-small);}
+.priority-value{font-size:26px;font-weight:600;margin-top:2px;}
+.priority-gap{font-size:var(--fs-small);color:var(--muted);margin-top:2px;}
+.priority-delta{font-size:var(--fs-caption);color:var(--muted);margin-top:4px;}
+
+/* --- Nhận định tự động --- */
+.narrative-card p{margin:0;font-size:var(--fs-normal);line-height:1.7;}
+
+/* --- Ghi chú giám sát --- */
+.viol-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;}
+.viol-empty{color:var(--faint);font-size:var(--fs-small);padding:6px 0;}
+.viol-month{font-size:20px;font-weight:600;color:var(--ink);}
+.viol-count{font-size:var(--fs-small);color:var(--ink);margin:2px 0 12px;}
+.viol-top3{margin:0 0 14px;padding-left:20px;font-size:var(--fs-normal);line-height:1.7;color:var(--ink);}
+.viol-toggle-btn{
+  font-family:var(--font);font-size:var(--fs-caption);font-weight:600;color:#004C85;background:#F0F5FA;
+  border:1px solid var(--line);border-radius:6px;padding:7px 14px;cursor:pointer;
+}
+.viol-toggle-btn:hover{background:#E4EDF5;}
+.viol-detail{margin-top:16px;}
+table.viol-table{width:100%;border-collapse:collapse;font-size:var(--fs-small);}
+table.viol-table th{text-align:left;font-size:var(--fs-caption);font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding:8px;border-bottom:1.5px solid var(--line);}
+table.viol-table td{padding:10px 8px;border-bottom:1px solid var(--line);}
 table.viol-table tr:last-child td{border-bottom:none;}
-.month-chip{font-family:var(--font-mono);font-size:10.5px;background:var(--bg);color:#004C85;padding:2px 7px;border-radius:4px;font-weight:600;}
+.month-chip{font-size:var(--fs-caption);background:var(--bg);color:#004C85;padding:3px 8px;border-radius:4px;font-weight:600;}
+
+/* --- Modal drill-down --- */
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(27,39,51,0.5);z-index:100;align-items:center;justify-content:center;padding:20px;}
+.modal-backdrop.open{display:flex;}
+.modal-box{background:#fff;border-radius:12px;max-width:640px;width:100%;max-height:80vh;overflow:auto;}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;}
+.modal-head h3{margin:0;font-size:var(--fs-card-title);font-weight:600;}
+.modal-close{border:none;background:none;font-size:18px;cursor:pointer;color:var(--muted);}
+.modal-body{padding:18px 20px;}
+.drill-note{font-size:var(--fs-caption);color:var(--faint);margin:0 0 14px;}
 
 @media(max-width:640px){
-  .wrap{padding:16px 14px 40px;}
-  .brand-title{font-size:19px;}
+  .wrap{padding:20px 16px 40px;}
+  :root{
+    --fs-dashboard-title: 26px;
+    --fs-section-title: 21px;
+    --fs-card-value: 36px;
+  }
   .filter-row{flex-direction:column;align-items:stretch;}
   .selector-block, .selector-block.grow{min-width:0;width:100%;}
+}
+
+@media print{
+  .filter-row, .refresh-row, #refreshBtn, #printBtn, .viol-toggle-btn, .modal-backdrop{display:none !important;}
+  .chart-grid{grid-template-columns:repeat(2,1fr) !important;}
+  .card, .kpi-card, .status-card, .viol-card{break-inside:avoid;}
+  body{background:#fff;}
 }
 </style>
 </head>
@@ -124,7 +198,10 @@ table.viol-table tr:last-child td{border-bottom:none;}
     </div>
   </div>
 
-  <div class="refresh-row"><button id="refreshBtn">↻ Làm mới dữ liệu</button></div>
+  <div class="refresh-row">
+    <button id="printBtn" class="btn-secondary">🖨 In / Xuất báo cáo</button>
+    <button id="refreshBtn">↻ Làm mới dữ liệu</button>
+  </div>
   <div id="statusMsg" class="status"></div>
 
   <div class="filter-row">
@@ -142,16 +219,34 @@ table.viol-table tr:last-child td{border-bottom:none;}
     </div>
   </div>
 
-  <div class="unit-strip"><div class="unit-name">Đơn vị: <span id="unitNameOut">—</span></div></div>
+  <div class="unit-strip" style="display:none"><div class="unit-name">Đơn vị: <span id="unitNameOut">—</span></div></div>
 
-  <div class="section-label" data-num="01">Tổng quan</div>
+  <h2 class="section-title"><span class="num">01</span>Tổng quan</h2>
   <div class="kpi-grid" id="kpiGrid"></div>
 
-  <div class="section-label" data-num="02">Chi tiết từng nội dung giám sát</div>
+  <div class="status-grid" id="statusOverview"></div>
+
+  <h2 class="section-title"><span class="num">02</span>Chi tiết từng nội dung giám sát</h2>
   <div class="chart-grid" id="chartGrid"></div>
 
-  <div class="section-label" data-num="03">Lưu ý trong quá trình giám sát</div>
+  <h2 class="section-title"><span class="num">03</span>Ưu tiên cải tiến</h2>
+  <div class="viol-card" id="priorityList"></div>
+
+  <h2 class="section-title"><span class="num">04</span>Nhận định của hệ thống</h2>
+  <div class="viol-card narrative-card" id="narrativeBlock"></div>
+
+  <h2 class="section-title"><span class="num">05</span>Ghi chú giám sát</h2>
   <div class="viol-card" id="violCard"></div>
+</div>
+
+<div id="drillModal" class="modal-backdrop">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="drillModalTitle">Chi tiết tiêu chí</h3>
+      <button id="drillModalClose" class="modal-close">✕</button>
+    </div>
+    <div id="drillModalBody" class="modal-body"></div>
+  </div>
 </div>
 <script>
 window.__CSV_URLS__ = {
@@ -163,11 +258,11 @@ window.__CSV_URLS__ = {
 // ============ CẤU HÌNH ============
 const TARGETS = {nhandang:0.85, vongtay:1.0, tenga:0.95, atpt:0.85, "5s":0.80};
 const SECTION_TITLES = {
-  nhandang:"Thực hành nhận dạng NB",
-  vongtay:"Kiểm tra vòng tay nhận dạng",
-  tenga:"Đánh giá nguy cơ té ngã",
-  atpt:"Đánh giá bảng kiểm an toàn phẫu thuật",
-  "5s":"Đánh giá 5S"
+  nhandang:"Nhận dạng người bệnh",
+  vongtay:"Vòng tay nhận dạng",
+  tenga:"Đánh giá & phòng\u00A0ngừa té ngã",
+  atpt:"Thực hành bảng kiểm ATPT",
+  "5s":"Thực hiện 5S"
 };
 const SECTION_COLORS = {
   nhandang:"#004C85", vongtay:"#006BBB", tenga:"#30A0E0", atpt:"#FFC872", "5s":"#FFE3B3"
@@ -178,6 +273,25 @@ const INK = "#1F2E3D";
 const ATPT_ELIGIBLE = new Set(["A2.b","A14","A16","B1.a","B1.b","B1.c","B1.d","B1.e","B2","B3","B4","B6","B7","B8","B9","B11"]);
 const NHANDANG_MSYT_ONLY = new Set(["A12","B12"]);
 const MONTH_LABELS = ['T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'];
+
+// Cột số lượng mẫu đã giám sát (để hiện "đã giám sát N hồ sơ/NB")
+const SAMPLE_COL = {nhandang:5, vongtay:13, tenga:21, atpt:29, "5s":43}; // ND_SOTH, VT_SONB, TN_TONGPHIEU, ATPT_SOHOSO, S5_SOKHUVUC
+const SAMPLE_UNIT_LABEL = {nhandang:"hồ sơ", vongtay:"người bệnh", tenga:"phiếu", atpt:"hồ sơ", "5s":"khu vực"};
+
+// 4 mức cảnh báo theo mức thiếu hụt so với mục tiêu
+const TIER_COLORS = {good:"#1E8A57", yellow:"#D9A441", orange:"#E07A2C", red:"#B8402A", na:"#C7D2DA"};
+function tierOf(value, target){
+  if(value===null || value===undefined) return 'na';
+  if(value >= target) return 'good';
+  const gap = target - value; // hụt bao nhiêu điểm % so với mục tiêu
+  if(gap < 0.05) return 'yellow';
+  if(gap < 0.15) return 'orange';
+  return 'red';
+}
+function tierColor(tier){ return TIER_COLORS[tier] || TIER_COLORS.na; }
+function tierLabel(tier){
+  return {good:'Đạt', yellow:'Cần theo dõi', orange:'Cần theo dõi', red:'Chưa đạt', na:'Chưa có dữ liệu'}[tier];
+}
 
 // Cột (0-based) trong sheet "Kết quả ND-TN-ATPT"
 const COL = {
@@ -191,15 +305,20 @@ const COL = {
 
 const BREAKDOWN_DEF = {
   nhandang: {cols:[COL.ND_CAUHOI, COL.ND_HOTEN, COL.ND_NTNS, COL.ND_DIACHI, COL.ND_MSYT],
-             names:["Sử dụng câu hỏi mở","Nhận dạng họ tên NB","Nhận dạng NTNS","Nhận dạng địa chỉ NB","Đối chiếu MSYT"]},
+             names:["Sử dụng câu hỏi mở","Nhận dạng họ tên người bệnh","Nhận dạng ngày tháng năm sinh","Nhận dạng địa chỉ người bệnh","Đối chiếu mã số y tế"],
+             shortNames:["Câu hỏi mở","Họ tên NB","NTNS","Địa chỉ NB","Đối chiếu MSYT"]},
   vongtay: {cols:[COL.VT_MAUSAC, COL.VT_THONGTIN, COL.VT_TINHTRANG, COL.VT_VITRI],
-            names:["Màu sắc","Thông tin","Tình trạng vòng","Vị trí đeo"]},
+            names:["Màu sắc","Thông tin","Tình trạng vòng","Vị trí đeo"],
+            shortNames:["Màu sắc","Thông tin","Tình trạng vòng","Vị trí đeo"]},
   tenga: {cols:[COL.TN_24H, COL.TN_THONGTIN, COL.TN_TAIDG, COL.TN_COBANG, COL.TN_DAYDU, COL.TN_DUNGMUC],
-          names:["Đánh giá trong 24h nhập viện","Phiếu đạt thông tin","Tái đánh giá đúng quy định","Có bảng HĐCT","HĐCT đầy đủ thông tin","HĐCT đúng mức nguy cơ"]},
+          names:["Đánh giá trong 24h nhập viện","Phiếu đạt thông tin","Tái đánh giá đúng quy định","Có bảng hành động can thiệp","Hành động can thiệp đầy đủ thông tin","Hành động can thiệp đúng mức nguy cơ"],
+          shortNames:["Trong 24h nhập viện","Phiếu đạt thông tin","Tái đánh giá đúng QĐ","Có bảng HĐCT","HĐCT đủ thông tin","HĐCT đúng mức nguy cơ"]},
   atpt: {cols:[COL.ATPT_THONGTINNB, COL.ATPT_GD1, COL.ATPT_GD2, COL.ATPT_GD3, COL.ATPT_NGUOITH, COL.ATPT_BSGM, COL.ATPT_PTV],
-         names:["Thông tin NB đầy đủ","Giai đoạn 1 đầy đủ","Giai đoạn 2 đầy đủ","Giai đoạn 3 đầy đủ","Thông tin người TH BK","Chữ ký BSGM","Chữ ký PTV"]},
+         names:["Thông tin người bệnh đầy đủ","Giai đoạn 1 đầy đủ","Giai đoạn 2 đầy đủ","Giai đoạn 3 đầy đủ","Thông tin người thực hiện bảng kiểm","Chữ ký bác sĩ gây mê","Chữ ký phẫu thuật viên"],
+         shortNames:["Thông tin NB đầy đủ","Giai đoạn 1","Giai đoạn 2","Giai đoạn 3","Người TH bảng kiểm","Chữ ký BSGM","Chữ ký PTV"]},
   "5s": {cols:[COL.S5_S1, COL.S5_S2, COL.S5_S3, COL.S5_S4, COL.S5_S5],
-         names:["S1: Sàng lọc","S2: Sắp xếp","S3: Sạch sẽ","S4: Săn sóc","S5: Sẵn sàng"]}
+         names:["S1: Sàng lọc","S2: Sắp xếp","S3: Sạch sẽ","S4: Săn sóc","S5: Sẵn sàng"],
+         shortNames:["S1: Sàng lọc","S2: Sắp xếp","S3: Sạch sẽ","S4: Săn sóc","S5: Sẵn sàng"]}
 };
 
 // ============ TIỆN ÍCH ============
@@ -391,19 +510,28 @@ function computeYearData(raw, year){
     const yearData = (byUnitYearMonth[unit] || {})[year] || {};
     ['nhandang','vongtay','tenga','atpt'].forEach(key=>{
       const months = new Array(12).fill(null);
+      const sampleSizes = new Array(12).fill(null);
       for(let m=1;m<=12;m++){
         const rows = (yearData[m]||{main:[]}).main;
         const sc = sectionScore(key, rows, unit);
         months[m-1] = (sc===undefined) ? undefined : sc;
+        if(rows.length){
+          const s = rows.reduce((sum,r)=> sum + (parseIntSafe(r[SAMPLE_COL[key]])||0), 0);
+          sampleSizes[m-1] = s;
+        }
       }
-      sections[key].depts[unit] = buildMonthQuarter(months);
+      sections[key].depts[unit] = Object.assign(buildMonthQuarter(months), {sampleSizes});
     });
     const months5s = new Array(12).fill(null);
+    const sampleSizes5s = new Array(12).fill(null);
     for(let m=1;m<=12;m++){
       const rows = (yearData[m]||{s5:[]}).s5;
       months5s[m-1] = s5Score(rows);
+      if(rows.length){
+        sampleSizes5s[m-1] = rows.reduce((sum,r)=> sum + (parseIntSafe(r[SAMPLE_COL['5s']])||0), 0);
+      }
     }
-    sections['5s'].depts[unit] = buildMonthQuarter(months5s);
+    sections['5s'].depts[unit] = Object.assign(buildMonthQuarter(months5s), {sampleSizes: sampleSizes5s});
   });
 
   ['nhandang','vongtay','tenga','atpt','5s'].forEach(key=>{
@@ -420,18 +548,24 @@ function computeYearData(raw, year){
   });
 
   const detailBreakdown = {};
-  ['nhandang','vongtay','tenga','atpt','5s'].forEach(key=>{ detailBreakdown[key] = {names: BREAKDOWN_DEF[key].names, depts:{}}; });
+  const rowsByQuarter = {}; // rowsByQuarter[key][unit][quarter] = [raw rows] - phục vụ drill-down
+  ['nhandang','vongtay','tenga','atpt','5s'].forEach(key=>{
+    detailBreakdown[key] = {names: BREAKDOWN_DEF[key].names, depts:{}};
+    rowsByQuarter[key] = {};
+  });
 
   allUnits.forEach(unit=>{
     const yearData = (byUnitYearMonth[unit] || {})[year] || {};
     ['nhandang','vongtay','tenga','atpt'].forEach(key=>{
       const def = BREAKDOWN_DEF[key];
       const byQuarter = {};
+      const rowsQ = {};
       for(let m=1;m<=12;m++){
         const q = quarterOf(m);
         const rows = (yearData[m]||{main:[]}).main;
         if(!rows.length) continue;
         byQuarter[q] = byQuarter[q] || def.cols.map(()=>[]);
+        rowsQ[q] = (rowsQ[q]||[]).concat(rows.map(r=>({row:r, month:m})));
         def.cols.forEach((c,i)=> rows.forEach(r=>{
           const v = parseNum(r[c]);
           if(v!==null) byQuarter[q][i].push(v);
@@ -440,14 +574,17 @@ function computeYearData(raw, year){
       const out = {};
       Object.keys(byQuarter).forEach(q=>{ out[q] = byQuarter[q].map(arr=> arr.length? avg(arr): null); });
       detailBreakdown[key].depts[unit] = out;
+      rowsByQuarter[key][unit] = rowsQ;
     });
     const def = BREAKDOWN_DEF['5s'];
     const byQuarter = {};
+    const rowsQ = {};
     for(let m=1;m<=12;m++){
       const q = quarterOf(m);
       const rows = (yearData[m]||{s5:[]}).s5;
       if(!rows.length) continue;
       byQuarter[q] = byQuarter[q] || def.cols.map(()=>[]);
+      rowsQ[q] = (rowsQ[q]||[]).concat(rows.map(r=>({row:r, month:m})));
       def.cols.forEach((c,i)=> rows.forEach(r=>{
         const v = parseNum(r[c]);
         if(v!==null) byQuarter[q][i].push(v);
@@ -456,9 +593,10 @@ function computeYearData(raw, year){
     const out = {};
     Object.keys(byQuarter).forEach(q=>{ out[q] = byQuarter[q].map(arr=> arr.length? avg(arr): null); });
     detailBreakdown['5s'].depts[unit] = out;
+    rowsByQuarter['5s'][unit] = rowsQ;
   });
 
-  return {sections, detailBreakdown};
+  return {sections, detailBreakdown, rowsByQuarter};
 }
 
 // ============ RENDER ============
@@ -467,11 +605,49 @@ function destroyCharts(){ charts.forEach(c=>c.destroy()); charts=[]; }
 function fmtPct(v){ return (v===null||v===undefined) ? '—' : Math.round(v*100)+'%'; }
 function sanitizeSeries(arr){ return arr.map(v => (typeof v === 'number' && isFinite(v)) ? v : null); }
 
+function fmtDelta(delta){
+  if(delta===null || delta===undefined) return {text:'—', cls:'delta-flat'};
+  const pts = Math.round(delta*100);
+  if(pts > 0) return {text:'▲ +'+pts+'%', cls:'delta-up'};
+  if(pts < 0) return {text:'▼ '+pts+'%', cls:'delta-down'};
+  return {text:'▬ 0%', cls:'delta-flat'};
+}
+
+function computeKpiStat(yearData, dept, key, curIdx){
+  const target = TARGETS[key];
+  if(key==='atpt' && !ATPT_ELIGIBLE.has(dept)) return {na:true};
+
+  const d = yearData.sections[key].depts[dept];
+  const prevIdx = curIdx-1;
+  const qCur = d ? d.months[curIdx] : null;
+  const qPrev = (d && prevIdx>=0) ? d.months[prevIdx] : null;
+
+  // Trung bình 3 tháng gần nhất (tháng hiện tại + 2 tháng trước, bỏ qua tháng thiếu dữ liệu)
+  const win = [curIdx, curIdx-1, curIdx-2].filter(i=>i>=0).map(i=> d ? d.months[i] : null);
+  const avg3 = avg(win);
+  const deltaPrev = (qCur!=null && qPrev!=null) ? (qCur-qPrev) : null;
+  const deltaAvg3 = (qCur!=null && avg3!=null) ? (qCur-avg3) : null;
+
+  // Cảnh báo nếu dưới mục tiêu 3 tháng liên tiếp
+  const last3 = [curIdx, curIdx-1, curIdx-2];
+  const warn = last3.every(i=>i>=0) && last3.every(i=>{
+    const v = d ? d.months[i] : null;
+    return v!=null && v < target;
+  });
+
+  const sampleCur = d && d.sampleSizes ? d.sampleSizes[curIdx] : null;
+  const achieved = (qCur!=null && sampleCur) ? Math.round(qCur*sampleCur) : null;
+
+  const tier = tierOf(qCur, target);
+
+  return {na:false, qCur, qPrev, avg3, deltaPrev, deltaAvg3, warn, sampleCur, achieved, tier, target};
+}
+
 function renderKPI(yearData, dept, month){
   const grid = document.getElementById('kpiGrid');
   grid.innerHTML = '';
   const curIdx = month-1;
-  const prevIdx = curIdx-1;
+  window.__KPI_STATS__ = {}; // lưu lại để khối "Tình trạng chung" và "Ưu tiên cải tiến" dùng chung
 
   ['nhandang','vongtay','tenga','atpt','5s'].forEach(key=>{
     const color = SECTION_COLORS[key];
@@ -479,44 +655,182 @@ function renderKPI(yearData, dept, month){
     card.className = 'kpi-card';
     card.style.setProperty('--kpi-color', color);
 
-    if(key==='atpt' && !ATPT_ELIGIBLE.has(dept)){
-      card.innerHTML = `<div class="kpi-name">${SECTION_TITLES[key]}</div><div class="kpi-na">Không áp dụng cho đơn vị này</div>`;
+    const stat = computeKpiStat(yearData, dept, key, curIdx);
+    window.__KPI_STATS__[key] = stat;
+
+    if(stat.na){
+      card.innerHTML = `<div class="kpi-head"><div class="kpi-title">${SECTION_TITLES[key]}</div></div><div class="kpi-na">Không áp dụng cho đơn vị này</div>`;
       grid.appendChild(card);
       return;
     }
 
-    const d = yearData.sections[key].depts[dept];
-    const qCur = d ? d.months[curIdx] : null;
-    const qPrev = (d && prevIdx>=0) ? d.months[prevIdx] : null;
-    const target = TARGETS[key];
-
-    let avgVal = null;
-    if(qCur!=null && qPrev!=null) avgVal = (qCur+qPrev)/2;
-    else if(qCur!=null) avgVal = qCur;
-    else if(qPrev!=null) avgVal = qPrev;
-    const met = avgVal===null ? null : avgVal >= target;
-
-    let arrow = '→';
-    if(qCur!=null && qPrev!=null){
-      const delta = qCur-qPrev;
-      arrow = delta>0.0001 ? '↑' : (delta<-0.0001 ? '↓' : '→');
-    }
-
-    const prevLabel = prevIdx>=0 ? 'Tháng '+(prevIdx+1) : '—';
-    const curLabel = 'Tháng '+month;
+    const {qCur, qPrev, deltaPrev, warn, sampleCur, tier, target} = stat;
+    const dPrev = fmtDelta(deltaPrev);
+    const tColor = tierColor(tier);
+    const prevMonthTag = curIdx-1>=0 ? 'T'+(curIdx) : '—';
 
     card.innerHTML = `
-      <div class="kpi-name">${SECTION_TITLES[key]}</div>
-      <div class="kpi-compare">
-        <div class="kpi-q"><div class="q-label">${prevLabel}</div><div class="q-value">${fmtPct(qPrev)}</div></div>
-        <div class="kpi-arrow">${arrow}</div>
-        <div class="kpi-q is-current"><div class="q-label">${curLabel}</div><div class="q-value">${fmtPct(qCur)}</div></div>
+      <div class="kpi-head">
+        <div class="kpi-title">${SECTION_TITLES[key]}</div>
+        ${warn?'<span class="warn-icon" title="Dưới mục tiêu 3 tháng liên tiếp">⚠</span>':''}
       </div>
-      <div class="kpi-target">Mục tiêu ≥ ${Math.round(target*100)}% · TB 2 tháng: ${fmtPct(avgVal)}</div>
-      <div class="kpi-badge-row">${met===null?'':`<span class="kpi-badge ${met?'badge-good':'badge-bad'}">${met?'ĐẠT':'CHƯA ĐẠT'}</span>`}</div>
+      <div class="kpi-value" style="color:${tColor}">${fmtPct(qCur)}</div>
+      <div class="kpi-target-line">Mục tiêu ≥ ${Math.round(target*100)}% · T${month}</div>
+      <div class="kpi-compare-row">
+        <span>${prevMonthTag}: ${fmtPct(qPrev)}</span>
+        <span class="delta-chip ${dPrev.cls}">${dPrev.text}</span>
+      </div>
+      ${sampleCur ? `<div class="kpi-caption">Số lượng giám sát: ${sampleCur} ${SAMPLE_UNIT_LABEL[key]}</div>` : ''}
+      <div class="kpi-badge-row"><span class="kpi-badge" style="background:${tColor}22;color:${tColor}">${tierLabel(tier)}</span></div>
     `;
     grid.appendChild(card);
   });
+}
+
+function renderStatusOverview(){
+  const container = document.getElementById('statusOverview');
+  const stats = window.__KPI_STATS__ || {};
+  let good=0, watch=0, bad=0, na=0, total=0;
+  Object.keys(stats).forEach(key=>{
+    total++;
+    const s = stats[key];
+    if(s.na || s.tier==='na'){ na++; return; }
+    if(s.tier==='good') good++;
+    else if(s.tier==='yellow' || s.tier==='orange') watch++;
+    else if(s.tier==='red') bad++;
+  });
+  container.innerHTML = `
+    <div class="status-card"><div class="status-num">${total}</div><div class="status-label">Tổng số nội dung</div></div>
+    <div class="status-card status-good"><div class="status-num">${good}</div><div class="status-label">Đạt mục tiêu</div></div>
+    <div class="status-card status-watch"><div class="status-num">${watch}</div><div class="status-label">Cần theo dõi</div></div>
+    <div class="status-card status-bad"><div class="status-num">${bad}</div><div class="status-label">Chưa đạt</div></div>
+    <div class="status-card status-na"><div class="status-num">${na}</div><div class="status-label">Chưa có dữ liệu</div></div>
+  `;
+}
+
+function renderPriorityList(yearData, dept, month){
+  const container = document.getElementById('priorityList');
+  const quarter = quarterOf(month);
+  const items = [];
+  ['nhandang','vongtay','tenga','atpt','5s'].forEach(key=>{
+    if(key==='atpt' && !ATPT_ELIGIBLE.has(dept)) return;
+    const def = BREAKDOWN_DEF[key];
+    const dd = yearData.detailBreakdown[key].depts[dept];
+    if(!dd) return;
+    const values = dd[quarter];
+    if(!values) return;
+    const prevValues = dd[quarter-1];
+    values.forEach((v,i)=>{
+      if(v===null || v===undefined) return;
+      const target = TARGETS[key];
+      if(v>=target) return;
+      const gap = target-v;
+      const prevV = prevValues ? prevValues[i] : null;
+      const delta = (prevV!=null) ? v-prevV : null;
+      items.push({sectionTitle:SECTION_TITLES[key], name:def.names[i], value:v, target, gap, delta, tier:tierOf(v,target)});
+    });
+  });
+  items.sort((a,b)=> b.gap-a.gap);
+  const top = items.slice(0,5);
+
+  if(!top.length){
+    container.innerHTML = '<div class="viol-empty">Không có tiêu chí nào dưới mục tiêu trong quý chứa tháng đang chọn — tất cả đều đạt.</div>';
+    return;
+  }
+
+  container.innerHTML = top.map(it=>{
+    const icon = it.tier==='red' ? '🔴' : (it.tier==='orange' ? '🟠' : '🟡');
+    const d = fmtDelta(it.delta);
+    return `
+      <div class="priority-item">
+        <div class="priority-icon">${icon}</div>
+        <div class="priority-body">
+          <div class="priority-name">${it.name} <span class="priority-section">— ${it.sectionTitle}</span></div>
+          <div class="priority-value" style="color:${tierColor(it.tier)}">${Math.round(it.value*100)}%</div>
+          <div class="priority-gap">Thấp hơn mục tiêu ${Math.round(it.gap*100)} điểm %</div>
+          <div class="priority-delta"><span class="${d.cls}">${d.text}</span> so với quý trước</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderNarrative(yearData, dept, month){
+  const container = document.getElementById('narrativeBlock');
+  const stats = window.__KPI_STATS__ || {};
+  const order = {red:0, orange:1, yellow:2, good:3};
+  let worstKey = null;
+  Object.keys(stats).forEach(key=>{
+    const s = stats[key];
+    if(s.na || s.tier==='na') return; // bỏ qua: không áp dụng HOẶC chưa có dữ liệu tháng này
+    if(worstKey===null || order[s.tier] < order[stats[worstKey].tier]) worstKey = key;
+  });
+
+  const applicableKeys = Object.keys(stats).filter(k=>!stats[k].na && stats[k].tier!=='na');
+  const totalApplicable = applicableKeys.length;
+  const goodCount = applicableKeys.filter(k=> stats[k].tier==='good').length;
+
+  if(!worstKey){
+    container.innerHTML = '<p>Chưa đủ dữ liệu giám sát trong tháng này để đưa ra nhận định.</p>';
+    return;
+  }
+  const s = stats[worstKey];
+  if(s.tier==='good'){
+    container.innerHTML = `<p>Khoa đạt ${goodCount}/${totalApplicable} nội dung giám sát trong tháng ${month}. Tất cả nội dung đều đạt hoặc vượt mục tiêu đề ra.</p>`;
+    return;
+  }
+
+  const quarter = quarterOf(month);
+  const def = BREAKDOWN_DEF[worstKey];
+  const dd = yearData.detailBreakdown[worstKey].depts[dept];
+  const values = dd ? dd[quarter] : null;
+  let worstCritText = '';
+  if(values){
+    let minIdx=-1, minV=null;
+    values.forEach((v,i)=>{ if(v!==null && (minV===null || v<minV)){ minV=v; minIdx=i; } });
+    if(minIdx>=0) worstCritText = `do tỷ lệ tuân thủ "${def.names[minIdx]}" chỉ đạt ${Math.round(minV*100)}%, thấp hơn mục tiêu ${Math.round((TARGETS[worstKey]-minV)*100)} điểm %`;
+  }
+
+  let deltaTxt = 'chưa có dữ liệu tháng trước để so sánh';
+  if(s.deltaPrev!=null){
+    const pts = Math.round(Math.abs(s.deltaPrev)*100);
+    deltaTxt = s.deltaPrev<0 ? `giảm ${pts} điểm %` : (s.deltaPrev>0 ? `tăng ${pts} điểm %` : 'không đổi');
+  }
+
+  container.innerHTML = `<p>Khoa đạt ${goodCount}/${totalApplicable} nội dung giám sát trong tháng ${month}. Nội dung cần ưu tiên cải tiến là <strong>${SECTION_TITLES[worstKey]}</strong> ${worstCritText}. So với tháng trước, nội dung này ${deltaTxt}. Đề nghị khoa rà soát quy trình liên quan và tăng cường kiểm tra nội bộ.</p>`;
+}
+
+function closeDrillDown(){ document.getElementById('drillModal').classList.remove('open'); }
+
+function openDrillDown(sectionKey, dept, quarter, critIdx, yearData, critName, targetVal){
+  const modal = document.getElementById('drillModal');
+  document.getElementById('drillModalTitle').textContent = `${SECTION_TITLES[sectionKey]} — ${critName}`;
+  const body = document.getElementById('drillModalBody');
+  const rq = yearData.rowsByQuarter[sectionKey][dept];
+  const rowsInfo = rq ? rq[quarter] : null;
+
+  if(!rowsInfo || !rowsInfo.length){
+    body.innerHTML = '<div class="viol-empty">Không có phiên giám sát nào trong quý này.</div>';
+  } else {
+    const def = BREAKDOWN_DEF[sectionKey];
+    const colIdx = def.cols[critIdx];
+    const rowsHtml = rowsInfo.map(({row,month})=>{
+      const loai = sectionKey==='5s' ? row[COL.S5_LOAI] : row[COL.LOAI];
+      const donvi = sectionKey==='5s' ? row[COL.S5_DVDANHGIA] : row[COL.DVGS];
+      const v = parseNum(row[colIdx]);
+      const vTxt = v===null ? '—' : Math.round(v*100)+'%';
+      const below = v!==null && v<targetVal;
+      return `<tr><td>Tháng ${month}</td><td>${loai||'—'}</td><td>${donvi||'—'}</td><td style="color:${below?ALERT:INK};font-weight:${below?700:400}">${vTxt}</td></tr>`;
+    }).join('');
+    body.innerHTML = `
+      <p class="drill-note">Dữ liệu ở mức phiên giám sát — không có thông tin định danh từng người bệnh cụ thể trong nguồn dữ liệu hiện tại.</p>
+      <table class="viol-table">
+        <thead><tr><th>Kỳ giám sát</th><th>Loại giám sát</th><th>Đơn vị thực hiện</th><th>Tỷ lệ tiêu chí này</th></tr></thead>
+        <tbody>${rowsHtml}</tbody>
+      </table>
+    `;
+  }
+  modal.classList.add('open');
 }
 
 function overviewTrendChart(body, yearData, dept){
@@ -541,37 +855,32 @@ function overviewTrendChart(body, yearData, dept){
       responsive:true, maintainAspectRatio:true, aspectRatio:3.2,
       plugins:{legend:{display:false}, tooltip:{callbacks:{label:(item)=>`${item.dataset.label}: ${item.raw===null?'—':Math.round(item.raw)+'%'}`}}},
       scales:{
-        y:{min:0,max:100,ticks:{callback:v=>v+'%',font:{family:"SFMono-Regular, Consolas, monospace",size:10}},grid:{color:'#EEF4F9'}},
-        x:{grid:{display:false},ticks:{font:{family:"-apple-system, Segoe UI, sans-serif",size:11}}}
+        y:{min:0,max:100,ticks:{callback:v=>v+'%',font:{family:"'Inter', sans-serif",size:12}},grid:{color:'#EEF4F9'}},
+        x:{grid:{display:false},ticks:{font:{family:"'Inter', sans-serif",size:12}}}
       }
     }
   });
   charts.push(chart);
 }
 
-function breakdownBarChart(body, names, values, targetVal, color){
+function breakdownBarChart(body, names, values, targetVal, sectionKey, dept, quarter, yearData, fullNames){
   body.innerHTML = '<canvas></canvas>';
-  const ctx = body.querySelector('canvas').getContext('2d');
+  const canvas = body.querySelector('canvas');
+  const ctx = canvas.getContext('2d');
   const data = values.map(v => v===null||v===undefined ? null : v*100);
-  const validVals = data.filter(v => v!==null);
-  const minVal = validVals.length ? Math.min(...validVals) : null;
-  const maxVal = validVals.length ? Math.max(...validVals) : null;
-  const spread = (maxVal!==null && minVal!==null) ? (maxVal-minVal) : 0;
-  const showHighlight = spread > 1;
-  const isLowest = data.map(v => showHighlight && v!==null && minVal!==null && (v-minVal)<=0.05);
-  const barColors = data.map((v,i)=> v===null ? '#E4EDF3' : (isLowest[i] ? ALERT : color));
+  const barColors = data.map(v => v===null ? TIER_COLORS.na : tierColor(tierOf(v/100, targetVal)));
 
   const valueLabelPlugin = {
     id:'vl_'+Math.random().toString(36).slice(2),
     afterDatasetsDraw(chart){
       const meta = chart.getDatasetMeta(0);
       const c = chart.ctx; c.save();
-      c.font = "600 11px SFMono-Regular, Consolas, monospace";
+      c.font = "600 12px 'Inter', sans-serif";
       c.textAlign='left'; c.textBaseline='middle';
       meta.data.forEach((bar,i)=>{
         const val = data[i];
         if(val===null||val===undefined) return;
-        c.fillStyle = isLowest[i] ? ALERT : INK;
+        c.fillStyle = barColors[i];
         c.fillText(Math.round(val)+'%', bar.x+6, bar.y);
       });
       c.restore();
@@ -583,7 +892,7 @@ function breakdownBarChart(body, names, values, targetVal, color){
       const xScale = chart.scales.x, area = chart.chartArea;
       const xPix = xScale.getPixelForValue(targetVal*100);
       const c = chart.ctx; c.save();
-      c.font = "700 10.5px -apple-system, Segoe UI, sans-serif";
+      c.font = "600 12px 'Inter', sans-serif";
       c.fillStyle = TARGET_LINE; c.textBaseline='bottom';
       const label = 'Mục tiêu '+Math.round(targetVal*100)+'%';
       const textW = c.measureText(label).width;
@@ -595,7 +904,8 @@ function breakdownBarChart(body, names, values, targetVal, color){
     }
   };
 
-  new Chart(ctx, {
+  canvas.style.cursor = 'pointer';
+  const chart = new Chart(ctx, {
     type:'bar',
     data:{labels:names, datasets:[
       {label:'Tỷ lệ đạt', data, backgroundColor:barColors, borderRadius:4},
@@ -605,13 +915,23 @@ function breakdownBarChart(body, names, values, targetVal, color){
       indexAxis:'y', responsive:true, maintainAspectRatio:true, aspectRatio:2.1,
       layout:{padding:{right:55, top:22}},
       plugins:{legend:{display:false}},
+      onClick:(evt, elements)=>{
+        if(!elements.length) return;
+        const idx = elements[0].index;
+        openDrillDown(sectionKey, dept, quarter, idx, yearData, (fullNames||names)[idx], targetVal);
+      },
       scales:{
-        x:{min:0,max:100,ticks:{stepSize:20,callback:v=>Math.round(v)+'%',font:{family:"SFMono-Regular, Consolas, monospace",size:10}},grid:{color:'#EEF4F9'}},
-        y:{grid:{display:false},ticks:{font:{family:"-apple-system, Segoe UI, sans-serif",size:11.5}}}
+        x:{min:0,max:100,ticks:{stepSize:20,callback:v=>Math.round(v)+'%',font:{family:"'Inter', sans-serif",size:12}},grid:{color:'#EEF4F9'}},
+        y:{
+          grid:{display:false},
+          ticks:{font:{family:"'Inter', sans-serif",size:12}},
+          afterFit(scale){ scale.width = 168; }
+        }
       }
     },
     plugins:[valueLabelPlugin, targetLabelPlugin]
   });
+  charts.push(chart);
 }
 
 function renderCharts(yearData, dept, month){
@@ -646,7 +966,8 @@ function renderCharts(yearData, dept, month){
       const dd = yearData.detailBreakdown[key].depts[dept];
       const values = dd ? dd[quarter] : null;
       if(values && values.some(v=>v!==null)){
-        breakdownBarChart(body, yearData.detailBreakdown[key].names, values, TARGETS[key], SECTION_COLORS[key]);
+        const def = BREAKDOWN_DEF[key];
+        breakdownBarChart(body, def.shortNames, values, TARGETS[key], key, dept, quarter, yearData, def.names);
       } else {
         body.innerHTML = '<div class="chart-empty">Chưa có dữ liệu bóc tách tiêu chí cho đơn vị này trong quý chứa tháng đang chọn.</div>';
       }
@@ -656,27 +977,52 @@ function renderCharts(yearData, dept, month){
   });
 }
 
-function renderViol(raw, dept){
+function renderViol(raw, dept, month){
   const card = document.getElementById('violCard');
-  const months = raw.violations.depts[dept];
-  if(!months){
-    card.innerHTML = '<div class="viol-empty">Không ghi nhận lưu ý nào trong quá trình giám sát đối với đơn vị này.</div>';
+  const monthsArr = raw.violations.depts[dept];
+  const labels = ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'];
+  const cell = monthsArr ? monthsArr[month-1] : null;
+
+  if(!monthsArr || !cell || String(cell).trim()===''){
+    card.innerHTML = `<div class="viol-empty">Tháng ${month}: không ghi nhận lưu ý nào trong quá trình giám sát đối với đơn vị này.</div>`;
     return;
   }
-  const labels = ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'];
-  let rows = '';
-  months.forEach((cell,i)=>{
-    if(cell===undefined || cell===null || String(cell).trim()==='') return;
-    const digits = String(cell).replace(/[^0-9]/g,'').split('');
-    if(!digits.length) return;
-    digits.forEach(d=>{
-      const num = parseInt(d,10);
-      const text = raw.violations.lookup[num] || ('Ghi chú: '+cell);
-      rows += `<tr><td><span class="month-chip">${labels[i]}</span></td><td>${text}</td></tr>`;
+
+  const digits = String(cell).replace(/[^0-9]/g,'').split('');
+  const counts = {};
+  digits.forEach(d=>{ counts[d] = (counts[d]||0)+1; });
+  const total = digits.length;
+  const top3 = Object.keys(counts).sort((a,b)=>counts[b]-counts[a]).slice(0,3);
+  const top3Html = top3.map(code=>{
+    const text = raw.violations.lookup[parseInt(code,10)] || ('Ghi chú: '+cell);
+    return `<li>${counts[code]} lượt — ${text}</li>`;
+  }).join('');
+
+  let fullRows = '';
+  monthsArr.forEach((c,i)=>{
+    if(c===undefined || c===null || String(c).trim()==='') return;
+    String(c).replace(/[^0-9]/g,'').split('').forEach(d=>{
+      const text = raw.violations.lookup[parseInt(d,10)] || ('Ghi chú: '+c);
+      fullRows += `<tr><td><span class="month-chip">${labels[i]}</span></td><td>${text}</td></tr>`;
     });
   });
-  card.innerHTML = rows ? `<table class="viol-table"><thead><tr><th style="width:110px">Tháng</th><th>Lưu ý ghi nhận trong giám sát</th></tr></thead><tbody>${rows}</tbody></table>`
-                        : '<div class="viol-empty">Không ghi nhận lưu ý nào trong quá trình giám sát đối với đơn vị này.</div>';
+
+  card.innerHTML = `
+    <div class="viol-month">Tháng ${month}</div>
+    <div class="viol-count">Có ${total} ghi chú</div>
+    <ul class="viol-top3">${top3Html}</ul>
+    <button id="violToggle" class="viol-toggle-btn">Xem chi tiết cả năm</button>
+    <div id="violDetail" class="viol-detail" style="display:none">
+      <table class="viol-table"><thead><tr><th style="width:110px">Tháng</th><th>Lưu ý ghi nhận trong giám sát</th></tr></thead><tbody>${fullRows}</tbody></table>
+    </div>
+  `;
+  const btn = document.getElementById('violToggle');
+  btn.onclick = ()=>{
+    const det = document.getElementById('violDetail');
+    const show = det.style.display==='none';
+    det.style.display = show?'block':'none';
+    btn.textContent = show?'Ẩn chi tiết':'Xem chi tiết cả năm';
+  };
 }
 
 // ============ TRẠNG THÁI & KHỞI ĐỘNG ============
@@ -687,9 +1033,12 @@ let STATE = {dept:null, year:null, month:null};
 function renderAll(){
   if(!RAW || !YEAR_DATA || !STATE.dept) return;
   document.getElementById('unitNameOut').textContent = STATE.dept;
-  renderKPI(YEAR_DATA, STATE.dept, STATE.month);
+  renderKPI(YEAR_DATA, STATE.dept, STATE.month);          // cũng set window.__KPI_STATS__
+  renderStatusOverview();
   renderCharts(YEAR_DATA, STATE.dept, STATE.month);
-  renderViol(RAW, STATE.dept);
+  renderPriorityList(YEAR_DATA, STATE.dept, STATE.month);
+  renderNarrative(YEAR_DATA, STATE.dept, STATE.month);
+  renderViol(RAW, STATE.dept, STATE.month);
 }
 
 function populateYearSelect(raw, curYear){
@@ -761,6 +1110,9 @@ async function boot(urls){
 }
 
 document.getElementById('refreshBtn').addEventListener('click', ()=> boot(window.__CSV_URLS__));
+document.getElementById('printBtn').addEventListener('click', ()=> window.print());
+document.getElementById('drillModalClose').addEventListener('click', closeDrillDown);
+document.getElementById('drillModal').addEventListener('click', (e)=>{ if(e.target.id==='drillModal') closeDrillDown(); });
 
 boot(window.__CSV_URLS__);
 </script>
