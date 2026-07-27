@@ -28,10 +28,10 @@
   --bg:#F6F8FA; --surface:#FFFFFF; --ink:#1B2733; --muted:#5C6B7A; --faint:#94A3B3; --line:#E1E7ED;
 
   /* Thang cỡ chữ */
-  --fs-dashboard-title: 36px;
-  --fs-section-title: 28px;
-  --fs-card-title: 18px;
-  --fs-card-value: 48px;
+  --fs-dashboard-title: 30px;
+  --fs-section-title: 22px;
+  --fs-card-title: 17px;
+  --fs-card-value: 42px;
   --fs-normal: 16px;
   --fs-small: 14px;
   --fs-caption: 13px;
@@ -42,121 +42,127 @@ body{
   font-weight:400;font-size:var(--fs-normal);line-height:1.5;letter-spacing:0;
   -webkit-font-smoothing:antialiased;
 }
-.wrap{max-width:1180px;margin:0 auto;padding:28px 24px 60px;}
+.wrap{max-width:1280px;margin:0 auto;padding:20px 24px 48px;}
 
-.topbar{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding-bottom:20px;margin-bottom:8px;border-bottom:2px solid var(--ink);flex-wrap:wrap;}
-.brand-eyebrow{font-size:var(--fs-caption);font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#004C85;margin:0 0 8px;}
-.brand-title{font-size:var(--fs-dashboard-title);font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin:0;}
+/* --- Header: gọn, 1 hàng trên desktop --- */
+.header-bar{
+  display:flex;align-items:center;flex-wrap:wrap;gap:14px 20px;
+  padding-bottom:14px;margin-bottom:20px;border-bottom:2px solid var(--ink);
+}
+.header-title-block{margin-right:auto;flex:1 1 auto;min-width:0;max-width:320px;}
+.brand-eyebrow{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#004C85;margin:0;line-height:1.4;}
+.brand-title{font-size:26px;font-weight:700;letter-spacing:-0.02em;line-height:1.25;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.header-controls{display:flex;align-items:center;flex-wrap:wrap;gap:10px 12px;flex:0 0 auto;}
+.header-controls .select-wrap select{padding:9px 32px 9px 12px;font-size:var(--fs-small);}
+#deptSelect{width:340px;max-width:100%;}
+#monthSelect, #yearSelect{width:140px;}
+.header-btn-group{display:flex;gap:8px;}
 
-.refresh-row{display:flex;justify-content:flex-end;gap:8px;margin:16px 0 8px;}
 .btn-secondary, #refreshBtn{
   font-family:var(--font);font-size:var(--fs-small);font-weight:500;color:#004C85;background:#fff;
-  border:1px solid var(--line);border-radius:6px;padding:8px 14px;cursor:pointer;letter-spacing:0;
+  border:1px solid var(--line);border-radius:6px;padding:9px 14px;cursor:pointer;letter-spacing:0;
+  white-space:nowrap;transition:background 150ms ease;
 }
 .btn-secondary:hover, #refreshBtn:hover{background:#F0F5FA;}
 
-.status{font-size:var(--fs-caption);padding:4px 0 14px;min-height:16px;}
+.status{font-size:var(--fs-caption);padding:0 0 10px;min-height:0;}
 .status.loading{color:var(--muted);}
 .status.error{color:#B8402A;font-weight:500;}
 
-.filter-row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-bottom:24px;}
-.selector-block{display:flex;flex-direction:column;gap:6px;}
-.selector-block.grow{flex:1;min-width:220px;}
-.selector-label{font-size:var(--fs-caption);color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600;}
+.selector-block{display:flex;flex-direction:column;gap:4px;}
+.selector-label{display:none;} /* nhãn ẩn để gọn header 1 hàng, select đã đủ rõ nghĩa */
 .select-wrap select{
-  appearance:none;-webkit-appearance:none;width:100%;
+  appearance:none;-webkit-appearance:none;
   background:var(--surface) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%23004C85" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>') no-repeat right 12px center;
-  border:1.5px solid #B9CBDA;border-radius:6px;padding:10px 36px 10px 12px;font-size:var(--fs-small);font-weight:500;color:#1B2733;
-  font-family:var(--font);cursor:pointer;letter-spacing:0;
+  border:1.5px solid #B9CBDA;border-radius:6px;font-weight:500;color:#1B2733;
+  font-family:var(--font);cursor:pointer;letter-spacing:0;transition:border-color 150ms ease, box-shadow 150ms ease;
 }
-.select-wrap select:focus{outline:none;border-color:#004C85;}
-#deptSelect{min-width:240px;}
-#yearSelect, #monthSelect{min-width:130px;}
+.select-wrap select:focus{outline:none;border-color:#004C85;box-shadow:0 0 0 3px rgba(0,76,133,0.15);}
 
 .section-title{
   font-size:var(--fs-section-title);font-weight:600;letter-spacing:-0.01em;line-height:1.3;
-  margin:44px 0 18px;display:flex;align-items:baseline;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line);
+  margin:32px 0 16px;display:flex;align-items:baseline;gap:10px;
 }
-.section-title .num{font-size:var(--fs-caption);font-weight:700;color:#004C85;letter-spacing:.06em;}
+.section-title .num{font-size:11px;font-weight:700;color:#004C85;letter-spacing:.06em;}
 
-/* --- Khối KPI --- */
-.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px;}
-@media(max-width:980px){.kpi-grid{grid-template-columns:repeat(3,1fr);}}
+/* --- Khối KPI (compact) --- */
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:8px;}
+@media(max-width:1024px){.kpi-grid{grid-template-columns:repeat(3,1fr);}}
 @media(max-width:640px){.kpi-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:420px){.kpi-grid{grid-template-columns:1fr;}}
+@media(max-width:360px){.kpi-grid{grid-template-columns:1fr;}}
 
-.kpi-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 16px 16px;position:relative;overflow:hidden;}
+.kpi-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 16px 14px;
+  position:relative;overflow:hidden;transition:box-shadow 200ms ease, transform 200ms ease;
+}
+.kpi-card:hover{box-shadow:0 4px 14px rgba(27,39,51,0.08);transform:scale(1.01);}
 .kpi-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--kpi-color,#004C85);}
-.kpi-head{display:flex;align-items:flex-start;gap:6px;margin-bottom:10px;min-height:44px;}
-.kpi-title{font-size:16px;font-weight:600;line-height:1.35;min-width:0;flex:1;}
+.kpi-head{display:flex;align-items:flex-start;gap:6px;margin-bottom:4px;min-height:34px;}
+.kpi-title{font-size:15px;font-weight:600;line-height:1.25;min-width:0;flex:1;}
 .kpi-na{font-size:var(--fs-small);color:var(--faint);padding:14px 0;}
-.kpi-value{font-size:var(--fs-card-value);font-weight:500;line-height:1.1;letter-spacing:-0.02em;}
-.kpi-target-line{font-size:var(--fs-caption);color:var(--faint);margin:4px 0 12px;}
-.kpi-compare-row{display:flex;align-items:center;justify-content:space-between;font-size:var(--fs-small);color:var(--muted);padding:8px 0;border-top:1px dashed var(--line);}
+.kpi-value{font-size:var(--fs-card-value);font-weight:500;line-height:1.0;letter-spacing:-0.02em;}
+.kpi-target-line{font-size:var(--fs-caption);color:var(--faint);margin:2px 0 6px;}
+.kpi-compare-row{display:flex;align-items:center;justify-content:space-between;font-size:var(--fs-small);color:var(--muted);padding:5px 0;border-top:1px dashed var(--line);}
 .delta-chip{font-weight:600;padding:2px 8px;border-radius:20px;font-size:var(--fs-caption);}
 .delta-up{background:#E7F4EC;color:#1E8A57;}
 .delta-down{background:#FBEAE5;color:#B8402A;}
 .delta-flat{background:#F1F4F7;color:var(--muted);}
-.kpi-caption{font-size:var(--fs-caption);color:var(--muted);margin-top:6px;line-height:1.5;}
+.kpi-caption{font-size:var(--fs-caption);color:var(--muted);margin-top:5px;line-height:1.4;}
 .kpi-caption.muted{color:var(--faint);}
-.warn-icon{color:#B8402A;font-size:14px;}
-.kpi-badge-row{margin-top:12px;}
-.kpi-badge{display:inline-block;font-size:var(--fs-caption);font-weight:600;padding:4px 10px;border-radius:4px;}
-
-/* --- Tình trạng chung --- */
-.status-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:8px;}
-@media(max-width:860px){.status-grid{grid-template-columns:repeat(3,1fr);}}
-@media(max-width:480px){.status-grid{grid-template-columns:repeat(2,1fr);}}
-.status-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 14px;text-align:center;border-top:3px solid var(--faint);}
-.status-num{font-size:32px;font-weight:600;line-height:1.15;}
-.status-label{font-size:var(--fs-caption);color:var(--muted);margin-top:4px;font-weight:500;}
-.status-good{border-top-color:#1E8A57;} .status-good .status-num{color:#1E8A57;}
-.status-watch{border-top-color:#E07A2C;} .status-watch .status-num{color:#E07A2C;}
-.status-bad{border-top-color:#B8402A;} .status-bad .status-num{color:#B8402A;}
-.status-na{border-top-color:#94A3B3;} .status-na .status-num{color:#5C6B7A;}
+.warn-icon{color:#B8402A;font-size:13px;}
+.kpi-badge-row{margin-top:8px;}
+.kpi-badge{display:inline-block;font-size:var(--fs-caption);font-weight:600;padding:3px 9px;border-radius:4px;}
 
 /* --- Biểu đồ --- */
-.chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
-@media(max-width:860px){.chart-grid{grid-template-columns:1fr;}}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 18px 14px;}
+.chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media(max-width:768px){.chart-grid{grid-template-columns:1fr;}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;transition:box-shadow 200ms ease, transform 200ms ease;}
+.card:hover{box-shadow:0 4px 14px rgba(27,39,51,0.07);transform:scale(1.01);}
 .card.wide{grid-column:1/-1;}
-.card:not(.wide) .body, .card:not(.wide) .chart-empty{min-height:250px;display:flex;flex-direction:column;justify-content:center;}
-.card h3{font-size:var(--fs-card-title);font-weight:600;margin:0 0 14px;letter-spacing:-0.01em;}
-.legend{display:flex;gap:14px;font-size:var(--fs-caption);color:var(--muted);margin-top:8px;flex-wrap:wrap;}
+.card h3{font-size:var(--fs-card-title);font-weight:600;margin:0 0 10px;letter-spacing:-0.01em;}
+.trend-canvas-wrap{position:relative;height:360px;}
+@media(max-width:1024px){.trend-canvas-wrap{height:300px;}}
+@media(max-width:640px){.trend-canvas-wrap{height:230px;}}
+.breakdown-canvas-wrap{position:relative;height:190px;}
+.card:not(.wide) .body, .card:not(.wide) .chart-empty{min-height:190px;display:flex;flex-direction:column;justify-content:center;}
+.legend{display:flex;gap:14px;font-size:var(--fs-caption);color:var(--muted);margin-top:10px;flex-wrap:wrap;justify-content:center;}
+@media(min-width:769px) and (max-width:1023px){.legend{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 14px;}}
 .legend-item{display:flex;align-items:center;gap:6px;}
-.sw{width:13px;height:9px;border-radius:2px;display:inline-block;}
-.chart-empty{font-size:var(--fs-small);color:var(--faint);padding:30px 12px;text-align:center;}
-canvas{max-height:220px;}
+.sw{width:13px;height:9px;border-radius:2px;display:inline-block;flex:none;}
+.chart-empty{font-size:var(--fs-small);color:var(--faint);padding:20px 12px;text-align:center;}
 
-/* --- Ưu tiên cải tiến --- */
-.priority-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);}
+/* --- Ưu tiên cải tiến + Nhận định: 2 cột trên desktop --- */
+.two-col-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;}
+@media(max-width:1024px){.two-col-grid{grid-template-columns:1fr;}}
+.two-col-grid .section-title{grid-column:1/-1;margin-bottom:0;}
+
+.priority-item{padding:12px 0;border-bottom:1px solid var(--line);}
 .priority-item:last-child{border-bottom:none;}
-.priority-icon{font-size:20px;line-height:1.4;}
-.priority-body{flex:1;}
-.priority-name{font-weight:600;font-size:var(--fs-normal);}
-.priority-section{font-weight:400;color:var(--faint);font-size:var(--fs-small);}
-.priority-value{font-size:26px;font-weight:600;margin-top:2px;}
-.priority-gap{font-size:var(--fs-small);color:var(--muted);margin-top:2px;}
-.priority-delta{font-size:var(--fs-caption);color:var(--muted);margin-top:4px;}
+.priority-top{display:flex;align-items:center;gap:8px;}
+.priority-icon{font-size:16px;line-height:1;}
+.priority-name{font-weight:600;font-size:var(--fs-small);flex:1;min-width:0;}
+.priority-value{font-size:20px;font-weight:600;}
+.priority-sub{font-size:var(--fs-caption);color:var(--muted);margin-top:4px;line-height:1.5;}
 
-/* --- Nhận định tự động --- */
-.narrative-card p{margin:0;font-size:var(--fs-normal);line-height:1.7;}
+/* --- Nhận định tự động: dạng Alert nhỏ --- */
+.narrative-card{background:#FFF9EC;border:1px solid #F0DEA8;border-radius:10px;padding:14px 16px;min-height:auto;}
+.narrative-card p{margin:0;font-size:var(--fs-small);line-height:1.6;}
 
 /* --- Ghi chú giám sát --- */
-.viol-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;}
-.viol-empty{color:var(--faint);font-size:var(--fs-small);padding:6px 0;}
-.viol-month{font-size:20px;font-weight:600;color:var(--ink);}
-.viol-count{font-size:var(--fs-small);color:var(--ink);margin:2px 0 12px;}
-.viol-top3{margin:0 0 14px;padding-left:20px;font-size:var(--fs-normal);line-height:1.7;color:var(--ink);}
+.viol-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;}
+.viol-empty{color:var(--faint);font-size:var(--fs-small);padding:4px 0;}
+.viol-month{font-size:17px;font-weight:600;color:var(--ink);}
+.viol-count{font-size:var(--fs-small);color:var(--ink);margin:2px 0 10px;}
+.viol-top3{margin:0 0 12px;padding-left:20px;font-size:var(--fs-small);line-height:1.6;color:var(--ink);}
 .viol-toggle-btn{
   font-family:var(--font);font-size:var(--fs-caption);font-weight:600;color:#004C85;background:#F0F5FA;
-  border:1px solid var(--line);border-radius:6px;padding:7px 14px;cursor:pointer;
+  border:1px solid var(--line);border-radius:6px;padding:6px 12px;cursor:pointer;
 }
 .viol-toggle-btn:hover{background:#E4EDF5;}
-.viol-detail{margin-top:16px;}
+.viol-detail{margin-top:14px;}
 table.viol-table{width:100%;border-collapse:collapse;font-size:var(--fs-small);}
 table.viol-table th{text-align:left;font-size:var(--fs-caption);font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding:8px;border-bottom:1.5px solid var(--line);}
-table.viol-table td{padding:10px 8px;border-bottom:1px solid var(--line);}
+table.viol-table td{padding:9px 8px;border-bottom:1px solid var(--line);}
 table.viol-table tr:last-child td{border-bottom:none;}
 .month-chip{font-size:var(--fs-caption);background:var(--bg);color:#004C85;padding:3px 8px;border-radius:4px;font-weight:600;}
 
@@ -170,70 +176,75 @@ table.viol-table tr:last-child td{border-bottom:none;}
 .modal-body{padding:18px 20px;}
 .drill-note{font-size:var(--fs-caption);color:var(--faint);margin:0 0 14px;}
 
-@media(max-width:640px){
-  .wrap{padding:20px 16px 40px;}
+@media(max-width:768px){
+  .wrap{padding:16px 16px 40px;}
   :root{
-    --fs-dashboard-title: 26px;
-    --fs-section-title: 21px;
-    --fs-card-value: 36px;
+    --fs-dashboard-title: 22px;
+    --fs-section-title: 19px;
+    --fs-card-value: 34px;
   }
-  .filter-row{flex-direction:column;align-items:stretch;}
-  .selector-block, .selector-block.grow{min-width:0;width:100%;}
+  .header-bar{flex-direction:column;align-items:stretch;}
+  .header-title-block{margin-right:0;}
+  .brand-title{white-space:normal;}
+  .header-controls{width:100%;}
+  #deptSelect{width:100%;}
+  #monthSelect, #yearSelect{flex:1;width:auto;}
+}
+@media(max-width:480px){
+  .header-controls{flex-direction:column;align-items:stretch;}
+  .header-controls > .selector-block{width:100%;}
+  #monthSelect, #yearSelect{width:100%;}
+  .header-btn-group{width:100%;}
+  .header-btn-group button{flex:1;}
 }
 
 @media print{
-  .filter-row, .refresh-row, #refreshBtn, #printBtn, .viol-toggle-btn, .modal-backdrop{display:none !important;}
+  .filter-row, .header-controls, .refresh-row, #refreshBtn, #printBtn, .viol-toggle-btn, .modal-backdrop{display:none !important;}
   .chart-grid{grid-template-columns:repeat(2,1fr) !important;}
-  .card, .kpi-card, .status-card, .viol-card{break-inside:avoid;}
+  .card, .kpi-card, .viol-card{break-inside:avoid;}
   body{background:#fff;}
 }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="topbar">
-    <div>
+  <div class="header-bar">
+    <div class="header-title-block">
       <p class="brand-eyebrow">Công tác Quản lý chất lượng</p>
       <h1 class="brand-title">Dashboard tuân thủ quy trình - quy định</h1>
     </div>
+    <div class="header-controls">
+      <div class="selector-block">
+        <div class="select-wrap"><select id="deptSelect"><option>Đang tải danh sách...</option></select></div>
+      </div>
+      <div class="selector-block">
+        <div class="select-wrap"><select id="monthSelect"></select></div>
+      </div>
+      <div class="selector-block">
+        <div class="select-wrap"><select id="yearSelect"></select></div>
+      </div>
+      <div class="header-btn-group">
+        <button id="refreshBtn">↻ Làm mới</button>
+        <button id="printBtn" class="btn-secondary">🖨 Xuất PDF</button>
+      </div>
+    </div>
   </div>
 
-  <div class="refresh-row">
-    <button id="printBtn" class="btn-secondary">🖨 In / Xuất báo cáo</button>
-    <button id="refreshBtn">↻ Làm mới dữ liệu</button>
-  </div>
   <div id="statusMsg" class="status"></div>
-
-  <div class="filter-row">
-    <div class="selector-block grow">
-      <label class="selector-label" for="deptSelect">Đơn vị</label>
-      <div class="select-wrap"><select id="deptSelect"><option>Đang tải danh sách...</option></select></div>
-    </div>
-    <div class="selector-block">
-      <label class="selector-label" for="monthSelect">Tháng</label>
-      <div class="select-wrap"><select id="monthSelect"></select></div>
-    </div>
-    <div class="selector-block">
-      <label class="selector-label" for="yearSelect">Năm</label>
-      <div class="select-wrap"><select id="yearSelect"></select></div>
-    </div>
-  </div>
-
   <div class="unit-strip" style="display:none"><div class="unit-name">Đơn vị: <span id="unitNameOut">—</span></div></div>
 
   <h2 class="section-title"><span class="num">01</span>Tổng quan</h2>
   <div class="kpi-grid" id="kpiGrid"></div>
 
-  <div class="status-grid" id="statusOverview"></div>
-
   <h2 class="section-title"><span class="num">02</span>Chi tiết từng nội dung giám sát</h2>
   <div class="chart-grid" id="chartGrid"></div>
 
-  <h2 class="section-title"><span class="num">03</span>Ưu tiên cải tiến</h2>
-  <div class="viol-card" id="priorityList"></div>
-
-  <h2 class="section-title"><span class="num">04</span>Nhận định của hệ thống</h2>
-  <div class="viol-card narrative-card" id="narrativeBlock"></div>
+  <div class="two-col-grid" style="margin-top:32px;">
+    <h2 class="section-title"><span class="num">03</span>Ưu tiên cải tiến</h2>
+    <h2 class="section-title"><span class="num">04</span>Nhận định của hệ thống</h2>
+    <div class="viol-card" id="priorityList"></div>
+    <div class="narrative-card" id="narrativeBlock"></div>
+  </div>
 
   <h2 class="section-title"><span class="num">05</span>Ghi chú giám sát</h2>
   <div class="viol-card" id="violCard"></div>
@@ -687,27 +698,6 @@ function renderKPI(yearData, dept, month){
   });
 }
 
-function renderStatusOverview(){
-  const container = document.getElementById('statusOverview');
-  const stats = window.__KPI_STATS__ || {};
-  let good=0, watch=0, bad=0, na=0, total=0;
-  Object.keys(stats).forEach(key=>{
-    total++;
-    const s = stats[key];
-    if(s.na || s.tier==='na'){ na++; return; }
-    if(s.tier==='good') good++;
-    else if(s.tier==='yellow' || s.tier==='orange') watch++;
-    else if(s.tier==='red') bad++;
-  });
-  container.innerHTML = `
-    <div class="status-card"><div class="status-num">${total}</div><div class="status-label">Tổng số nội dung</div></div>
-    <div class="status-card status-good"><div class="status-num">${good}</div><div class="status-label">Đạt mục tiêu</div></div>
-    <div class="status-card status-watch"><div class="status-num">${watch}</div><div class="status-label">Cần theo dõi</div></div>
-    <div class="status-card status-bad"><div class="status-num">${bad}</div><div class="status-label">Chưa đạt</div></div>
-    <div class="status-card status-na"><div class="status-num">${na}</div><div class="status-label">Chưa có dữ liệu</div></div>
-  `;
-}
-
 function renderPriorityList(yearData, dept, month){
   const container = document.getElementById('priorityList');
   const quarter = quarterOf(month);
@@ -743,13 +733,12 @@ function renderPriorityList(yearData, dept, month){
     const d = fmtDelta(it.delta);
     return `
       <div class="priority-item">
-        <div class="priority-icon">${icon}</div>
-        <div class="priority-body">
-          <div class="priority-name">${it.name} <span class="priority-section">— ${it.sectionTitle}</span></div>
-          <div class="priority-value" style="color:${tierColor(it.tier)}">${Math.round(it.value*100)}%</div>
-          <div class="priority-gap">Thấp hơn mục tiêu ${Math.round(it.gap*100)} điểm %</div>
-          <div class="priority-delta"><span class="${d.cls}">${d.text}</span> so với quý trước</div>
+        <div class="priority-top">
+          <span class="priority-icon">${icon}</span>
+          <span class="priority-name">${it.name}</span>
+          <span class="priority-value" style="color:${tierColor(it.tier)}">${Math.round(it.value*100)}%</span>
         </div>
+        <div class="priority-sub">${it.sectionTitle} · Thiếu ${Math.round(it.gap*100)}% so với mục tiêu · <span class="${d.cls}">${d.text}</span> so với quý trước</div>
       </div>
     `;
   }).join('');
@@ -771,12 +760,12 @@ function renderNarrative(yearData, dept, month){
   const goodCount = applicableKeys.filter(k=> stats[k].tier==='good').length;
 
   if(!worstKey){
-    container.innerHTML = '<p>Chưa đủ dữ liệu giám sát trong tháng này để đưa ra nhận định.</p>';
+    container.innerHTML = '<p>💡 Chưa đủ dữ liệu giám sát trong tháng này để đưa ra nhận định.</p>';
     return;
   }
   const s = stats[worstKey];
   if(s.tier==='good'){
-    container.innerHTML = `<p>Khoa đạt ${goodCount}/${totalApplicable} nội dung giám sát trong tháng ${month}. Tất cả nội dung đều đạt hoặc vượt mục tiêu đề ra.</p>`;
+    container.innerHTML = `<p>💡 Khoa đạt ${goodCount}/${totalApplicable} nội dung giám sát trong tháng ${month}. Tất cả nội dung đều đạt hoặc vượt mục tiêu đề ra.</p>`;
     return;
   }
 
@@ -797,7 +786,7 @@ function renderNarrative(yearData, dept, month){
     deltaTxt = s.deltaPrev<0 ? `giảm ${pts} điểm %` : (s.deltaPrev>0 ? `tăng ${pts} điểm %` : 'không đổi');
   }
 
-  container.innerHTML = `<p>Khoa đạt ${goodCount}/${totalApplicable} nội dung giám sát trong tháng ${month}. Nội dung cần ưu tiên cải tiến là <strong>${SECTION_TITLES[worstKey]}</strong> ${worstCritText}. So với tháng trước, nội dung này ${deltaTxt}. Đề nghị khoa rà soát quy trình liên quan và tăng cường kiểm tra nội bộ.</p>`;
+  container.innerHTML = `<p>💡 Khoa đạt ${goodCount}/${totalApplicable} nội dung giám sát trong tháng ${month}. Nội dung cần ưu tiên cải tiến là <strong>${SECTION_TITLES[worstKey]}</strong> ${worstCritText}. So với tháng trước, nội dung này ${deltaTxt}. Đề nghị khoa rà soát quy trình liên quan và tăng cường kiểm tra nội bộ.</p>`;
 }
 
 function closeDrillDown(){ document.getElementById('drillModal').classList.remove('open'); }
@@ -834,7 +823,7 @@ function openDrillDown(sectionKey, dept, quarter, critIdx, yearData, critName, t
 }
 
 function overviewTrendChart(body, yearData, dept){
-  body.innerHTML = '<canvas></canvas><div class="legend"></div>';
+  body.innerHTML = '<div class="trend-canvas-wrap"><canvas></canvas></div><div class="legend"></div>';
   const ctx = body.querySelector('canvas').getContext('2d');
   const legend = body.querySelector('.legend');
   legend.innerHTML = ['nhandang','vongtay','tenga','atpt','5s'].map(key=>
@@ -852,7 +841,7 @@ function overviewTrendChart(body, yearData, dept){
     type:'line',
     data:{labels:MONTH_LABELS, datasets},
     options:{
-      responsive:true, maintainAspectRatio:true, aspectRatio:3.2,
+      responsive:true, maintainAspectRatio:false,
       plugins:{legend:{display:false}, tooltip:{callbacks:{label:(item)=>`${item.dataset.label}: ${item.raw===null?'—':Math.round(item.raw)+'%'}`}}},
       scales:{
         y:{min:0,max:100,ticks:{callback:v=>v+'%',font:{family:"'Inter', sans-serif",size:12}},grid:{color:'#EEF4F9'}},
@@ -864,7 +853,7 @@ function overviewTrendChart(body, yearData, dept){
 }
 
 function breakdownBarChart(body, names, values, targetVal, sectionKey, dept, quarter, yearData, fullNames){
-  body.innerHTML = '<canvas></canvas>';
+  body.innerHTML = '<div class="breakdown-canvas-wrap"><canvas></canvas></div>';
   const canvas = body.querySelector('canvas');
   const ctx = canvas.getContext('2d');
   const data = values.map(v => v===null||v===undefined ? null : v*100);
@@ -912,7 +901,7 @@ function breakdownBarChart(body, names, values, targetVal, sectionKey, dept, qua
       {label:'Mục tiêu', data:new Array(names.length).fill(targetVal*100), type:'line', borderColor:TARGET_LINE, borderWidth:1.5, borderDash:[2,3], pointRadius:0, tension:0}
     ]},
     options:{
-      indexAxis:'y', responsive:true, maintainAspectRatio:true, aspectRatio:2.1,
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
       layout:{padding:{right:55, top:22}},
       plugins:{legend:{display:false}},
       onClick:(evt, elements)=>{
@@ -1034,7 +1023,6 @@ function renderAll(){
   if(!RAW || !YEAR_DATA || !STATE.dept) return;
   document.getElementById('unitNameOut').textContent = STATE.dept;
   renderKPI(YEAR_DATA, STATE.dept, STATE.month);          // cũng set window.__KPI_STATS__
-  renderStatusOverview();
   renderCharts(YEAR_DATA, STATE.dept, STATE.month);
   renderPriorityList(YEAR_DATA, STATE.dept, STATE.month);
   renderNarrative(YEAR_DATA, STATE.dept, STATE.month);
