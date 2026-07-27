@@ -49,13 +49,13 @@ body{
   display:flex;align-items:center;flex-wrap:wrap;gap:14px 20px;
   padding-bottom:14px;margin-bottom:20px;border-bottom:2px solid var(--ink);
 }
-.header-title-block{margin-right:auto;flex:1 1 auto;min-width:0;max-width:320px;}
+.header-title-block{margin-right:auto;flex:1 1 auto;min-width:0;max-width:420px;}
 .brand-eyebrow{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#004C85;margin:0;line-height:1.4;}
-.brand-title{font-size:26px;font-weight:700;letter-spacing:-0.02em;line-height:1.25;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.header-controls{display:flex;align-items:center;flex-wrap:wrap;gap:10px 12px;flex:0 0 auto;}
-.header-controls .select-wrap select{padding:9px 32px 9px 12px;font-size:var(--fs-small);}
-#deptSelect{width:340px;max-width:100%;}
-#monthSelect, #yearSelect{width:140px;}
+.brand-title{font-size:24px;font-weight:700;letter-spacing:-0.02em;line-height:1.25;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.header-controls{display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px;flex:0 0 auto;}
+.header-controls .select-wrap select{padding:9px 30px 9px 12px;font-size:13px;}
+#deptSelect{width:220px;max-width:100%;}
+#monthSelect, #yearSelect{width:104px;}
 .header-btn-group{display:flex;gap:8px;}
 
 .btn-secondary, #refreshBtn{
@@ -92,13 +92,12 @@ body{
 @media(max-width:360px){.kpi-grid{grid-template-columns:1fr;}}
 
 .kpi-card{
-  background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 16px 14px;
-  position:relative;overflow:hidden;transition:box-shadow 200ms ease, transform 200ms ease;
+  background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--kpi-color,#004C85);border-radius:10px;padding:16px 16px 14px;
+  position:relative;transition:box-shadow 200ms ease, transform 200ms ease;
 }
 .kpi-card:hover{box-shadow:0 4px 14px rgba(27,39,51,0.08);transform:scale(1.01);}
-.kpi-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--kpi-color,#004C85);}
-.kpi-head{display:flex;align-items:flex-start;gap:6px;margin-bottom:4px;min-height:34px;}
-.kpi-title{font-size:15px;font-weight:600;line-height:1.25;min-width:0;flex:1;}
+.kpi-head{display:flex;align-items:flex-start;gap:6px;margin-bottom:4px;}
+.kpi-title{font-size:14.5px;font-weight:600;line-height:1.3;min-width:0;flex:1;}
 .kpi-na{font-size:var(--fs-small);color:var(--faint);padding:14px 0;}
 .kpi-value{font-size:var(--fs-card-value);font-weight:500;line-height:1.0;letter-spacing:-0.02em;}
 .kpi-target-line{font-size:var(--fs-caption);color:var(--faint);margin:2px 0 6px;}
@@ -143,6 +142,7 @@ body{
 .priority-name{font-weight:600;font-size:var(--fs-small);flex:1;min-width:0;}
 .priority-value{font-size:20px;font-weight:600;}
 .priority-sub{font-size:var(--fs-caption);color:var(--muted);margin-top:4px;line-height:1.5;}
+.priority-empty{font-size:var(--fs-small);color:#1E8A57;font-weight:500;padding:8px 0;}
 
 /* --- Nhận định tự động: dạng Alert nhỏ --- */
 .narrative-card{background:#FFF9EC;border:1px solid #F0DEA8;border-radius:10px;padding:14px 16px;min-height:auto;}
@@ -276,7 +276,7 @@ const SECTION_TITLES = {
   "5s":"Thực hiện 5S"
 };
 const SECTION_COLORS = {
-  nhandang:"#004C85", vongtay:"#006BBB", tenga:"#30A0E0", atpt:"#FFC872", "5s":"#FFE3B3"
+  nhandang:"#3B6FA8", vongtay:"#4C9F70", tenga:"#E0812F", atpt:"#8B5FBF", "5s":"#B08642"
 };
 const ALERT = "#D64550";
 const TARGET_LINE = "#33475B";
@@ -724,7 +724,7 @@ function renderPriorityList(yearData, dept, month){
   const top = items.slice(0,5);
 
   if(!top.length){
-    container.innerHTML = '<div class="viol-empty">Không có tiêu chí nào dưới mục tiêu trong quý chứa tháng đang chọn — tất cả đều đạt.</div>';
+    container.innerHTML = '<div class="priority-empty">✅ Không có tiêu chí nào dưới mục tiêu trong quý chứa tháng đang chọn — tất cả đều đạt.</div>';
     return;
   }
 
@@ -1024,8 +1024,10 @@ function renderAll(){
   document.getElementById('unitNameOut').textContent = STATE.dept;
   renderKPI(YEAR_DATA, STATE.dept, STATE.month);          // cũng set window.__KPI_STATS__
   renderCharts(YEAR_DATA, STATE.dept, STATE.month);
-  renderPriorityList(YEAR_DATA, STATE.dept, STATE.month);
-  renderNarrative(YEAR_DATA, STATE.dept, STATE.month);
+  try{ renderPriorityList(YEAR_DATA, STATE.dept, STATE.month); }
+  catch(err){ document.getElementById('priorityList').innerHTML = `<div class="chart-empty">Không tải được (${err.message}).</div>`; }
+  try{ renderNarrative(YEAR_DATA, STATE.dept, STATE.month); }
+  catch(err){ document.getElementById('narrativeBlock').innerHTML = `<p>Không tạo được nhận định (${err.message}).</p>`; }
   renderViol(RAW, STATE.dept, STATE.month);
 }
 
