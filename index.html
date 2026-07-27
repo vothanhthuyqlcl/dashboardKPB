@@ -46,10 +46,10 @@ body{
 
 /* --- Header: gọn, 1 hàng trên desktop --- */
 .header-bar{
-  display:flex;align-items:center;flex-wrap:wrap;gap:14px 20px;
+  display:flex;align-items:center;flex-wrap:nowrap;gap:14px 20px;
   padding-bottom:14px;margin-bottom:20px;border-bottom:2px solid var(--ink);
 }
-.header-title-block{margin-right:auto;flex:1 1 auto;min-width:0;max-width:420px;}
+.header-title-block{margin-right:auto;flex:1 1 auto;min-width:0;}
 .brand-eyebrow{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#004C85;margin:0;line-height:1.4;}
 .brand-title{font-size:24px;font-weight:700;letter-spacing:-0.02em;line-height:1.25;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .header-controls{display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px;flex:0 0 auto;}
@@ -99,7 +99,7 @@ body{
 .kpi-head{display:flex;align-items:flex-start;gap:6px;margin-bottom:4px;}
 .kpi-title{font-size:14.5px;font-weight:600;line-height:1.3;min-width:0;flex:1;}
 .kpi-na{font-size:var(--fs-small);color:var(--faint);padding:14px 0;}
-.kpi-value{font-size:var(--fs-card-value);font-weight:500;line-height:1.0;letter-spacing:-0.02em;}
+.kpi-value{font-size:var(--fs-card-value);font-weight:500;line-height:1.15;letter-spacing:-0.02em;}
 .kpi-target-line{font-size:var(--fs-caption);color:var(--faint);margin:2px 0 6px;}
 .kpi-compare-row{display:flex;align-items:center;justify-content:space-between;font-size:var(--fs-small);color:var(--muted);padding:5px 0;border-top:1px dashed var(--line);}
 .delta-chip{font-weight:600;padding:2px 8px;border-radius:20px;font-size:var(--fs-caption);}
