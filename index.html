@@ -106,26 +106,33 @@ body{
 
 .kpi-card{
   background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--kpi-color,#004C85);border-radius:10px;
-  padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;
-  position:relative;transition:box-shadow 200ms ease, transform 200ms ease;
+  padding:12px 14px;display:flex;flex-direction:column;gap:6px;
+  transition:box-shadow 200ms ease, transform 200ms ease;
 }
 .kpi-card:hover{box-shadow:0 4px 14px rgba(27,39,51,0.08);transform:scale(1.01);}
-.kpi-left{min-width:0;flex:1;}
-.kpi-title-row{display:flex;align-items:center;gap:6px;}
-.kpi-title{font-size:13px;font-weight:600;line-height:1.3;min-width:0;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.kpi-na{font-size:12px;color:var(--faint);margin-top:3px;line-height:1.4;}
-.kpi-value{font-size:24px;font-weight:600;line-height:1.05;letter-spacing:-0.01em;}
-.kpi-meta{font-size:11.5px;color:var(--faint);margin-top:2px;line-height:1.35;}
-.kpi-right{text-align:right;flex:none;}
-.delta-chip{font-weight:600;padding:2px 8px;border-radius:20px;font-size:10.5px;margin-top:4px;display:inline-block;white-space:nowrap;}
+.kpi-line{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.kpi-line.title-line{align-items:flex-start;}
+.kpi-line-left{min-width:0;flex:1;}
+.kpi-title{display:flex;align-items:center;gap:5px;font-weight:600;font-size:13px;line-height:1.3;
+  min-width:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.kpi-na{font-size:12px;color:var(--faint);line-height:1.4;}
+.kpi-value{font-size:22px;font-weight:600;line-height:1;flex:none;}
+.kpi-value.na{font-size:13px;color:var(--faint);font-weight:500;}
+.kpi-target, .kpi-sample{font-size:11px;color:var(--faint);}
+.kpi-badge{font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:6px;white-space:nowrap;flex:none;}
+.delta-chip{font-weight:600;padding:2px 7px;border-radius:20px;font-size:10.5px;white-space:nowrap;flex:none;}
 .delta-up{background:#E7F4EC;color:#1E8A57;}
 .delta-down{background:#FBEAE5;color:#B8402A;}
 .delta-flat{background:#F1F4F7;color:var(--muted);}
-.warn-icon{color:#B8402A;font-size:13px;flex:none;}
-.kpi-badge{display:inline-block;font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:20px;margin-top:5px;}
+.warn-icon{color:#B8402A;font-size:12px;flex:none;}
+.kpi-divider{border-top:1px dashed var(--line);margin:1px 0;}
+.badge-good{background:#E7F4EC;color:#1E8A57;}
+.badge-bad{background:#FBEAE5;color:#B8402A;}
 
 /* --- Biểu đồ --- */
+.trend-notes-grid{display:grid;grid-template-columns:2fr 1fr;gap:14px;align-items:stretch;margin-bottom:14px;}
+@media(max-width:900px){.trend-notes-grid{grid-template-columns:1fr;}}
+.trend-notes-grid .card.wide{grid-column:auto;}
 .chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
 @media(max-width:768px){.chart-grid{grid-template-columns:1fr;}}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;transition:box-shadow 200ms ease, transform 200ms ease;}
@@ -138,6 +145,8 @@ body{
 @media(max-width:480px){.trend-canvas-wrap{height:170px;}}
 .breakdown-canvas-wrap{position:relative;height:190px;}
 @media(max-width:480px){.breakdown-canvas-wrap{height:240px;}}
+.pareto-wrap{position:relative;height:190px;}
+@media(max-width:480px){.pareto-wrap{height:220px;}}
 .card:not(.wide) .body, .card:not(.wide) .chart-empty{min-height:190px;display:flex;flex-direction:column;justify-content:center;}
 @media(max-width:480px){.card:not(.wide) .body, .card:not(.wide) .chart-empty{min-height:240px;}}
 .legend{display:flex;gap:14px;font-size:var(--fs-caption);color:var(--muted);margin-top:10px;flex-wrap:wrap;justify-content:center;}
@@ -146,23 +155,19 @@ body{
 .sw{width:13px;height:9px;border-radius:2px;display:inline-block;flex:none;}
 .chart-empty{font-size:var(--fs-small);color:var(--faint);padding:20px 12px;text-align:center;}
 
-/* --- Ưu tiên cải tiến + Nhận định: 2 cột trên desktop --- */
-.two-col-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;}
-@media(max-width:1024px){.two-col-grid{grid-template-columns:1fr;}}
-.two-col-grid .section-title{grid-column:1/-1;margin-bottom:0;}
-
-.priority-item{padding:12px 0;border-bottom:1px solid var(--line);}
-.priority-item:last-child{border-bottom:none;}
-.priority-top{display:flex;align-items:center;gap:8px;}
-.priority-icon{font-size:16px;line-height:1;}
-.priority-name{font-weight:600;font-size:var(--fs-small);flex:1;min-width:0;}
-.priority-value{font-size:20px;font-weight:600;}
-.priority-sub{font-size:var(--fs-caption);color:var(--muted);margin-top:4px;line-height:1.5;}
-.priority-empty{font-size:var(--fs-small);color:#1E8A57;font-weight:500;padding:8px 0;}
-
-/* --- Nhận định tự động: dạng Alert nhỏ --- */
-.narrative-card{background:#FFF9EC;border:1px solid #F0DEA8;border-radius:10px;padding:14px 16px;min-height:auto;}
-.narrative-card p{margin:0;font-size:var(--fs-small);line-height:1.6;}
+/* --- Nhận xét nhanh (gộp nhận định + ưu tiên cải tiến + khuyến nghị) --- */
+.quicknote-card{background:#FFFDF7;border:1px solid #F0DEA8;border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:12px;}
+.quicknote-card h3{font-size:var(--fs-card-title);font-weight:600;margin:0;letter-spacing:-0.01em;}
+.qn-empty{font-size:var(--fs-small);color:var(--muted);margin:0;}
+.qn-summary{font-size:var(--fs-small);line-height:1.6;color:var(--ink);margin:0;}
+.qn-bullets{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+.qn-bullets li{font-size:var(--fs-caption);line-height:1.5;display:flex;gap:7px;}
+.qn-icon-ok{color:#1E8A57;flex:none;}
+.qn-icon-warn{color:#D9822B;flex:none;}
+.qn-subhead{font-size:var(--fs-caption);font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);margin:0 0 6px;border-top:1px dashed #E9DBAF;padding-top:12px;}
+.qn-priority-item{font-size:var(--fs-caption);line-height:1.5;margin-bottom:6px;display:flex;gap:6px;}
+.qn-priority-item b{font-weight:600;}
+.qn-reco{font-size:var(--fs-caption);line-height:1.6;color:var(--ink);margin:0;}
 
 /* --- Ghi chú giám sát --- */
 .viol-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;}
@@ -207,17 +212,23 @@ table.viol-table tr:last-child td{border-bottom:none;}
   #monthSelect, #yearSelect{flex:1;width:auto;}
 }
 @media(max-width:480px){
-  .header-controls{flex-direction:column;align-items:stretch;}
-  .header-controls > .selector-block{width:100%;}
-  #monthSelect, #yearSelect{width:100%;}
-  .header-btn-group{width:100%;}
-  .header-btn-group button{flex:1;}
+  .header-controls{flex-wrap:nowrap;overflow-x:auto;gap:6px;padding-bottom:2px;-webkit-overflow-scrolling:touch;align-items:center;}
+  .header-controls::-webkit-scrollbar{height:3px;}
+  .header-controls > .selector-block{width:auto;flex:none;}
+  #deptSelect{width:88px;}
+  #monthSelect{width:70px;}
+  #yearSelect{width:82px;}
+  .header-controls .select-wrap select{padding:7px 20px 7px 7px;font-size:12px;}
+  .header-btn-group{width:auto;flex:none;gap:6px;}
+  .header-btn-group button{flex:none;padding:8px 10px;}
+  .header-btn-group button .btn-text{display:none;}
 }
 
 @media print{
   .filter-row, .header-controls, .refresh-row, #refreshBtn, #printBtn, .viol-toggle-btn, .modal-backdrop{display:none !important;}
   .chart-grid{grid-template-columns:repeat(2,1fr) !important;}
-  .card, .kpi-card, .viol-card{break-inside:avoid;}
+  .trend-notes-grid{grid-template-columns:2fr 1fr !important;}
+  .card, .kpi-card, .viol-card, .quicknote-card{break-inside:avoid;}
   body{background:#fff;}
 }
 </style>
@@ -240,8 +251,8 @@ table.viol-table tr:last-child td{border-bottom:none;}
         <div class="select-wrap"><select id="yearSelect"></select></div>
       </div>
       <div class="header-btn-group">
-        <button id="refreshBtn">↻ Làm mới</button>
-        <button id="printBtn" class="btn-secondary">🖨 Xuất PDF</button>
+        <button id="refreshBtn">↻ <span class="btn-text">Làm mới</span></button>
+        <button id="printBtn" class="btn-secondary">🖨 <span class="btn-text">Xuất PDF</span></button>
       </div>
     </div>
   </div>
@@ -253,16 +264,10 @@ table.viol-table tr:last-child td{border-bottom:none;}
   <div class="kpi-grid" id="kpiGrid"></div>
 
   <h2 class="section-title"><span class="num">02</span>Chi tiết từng nội dung giám sát</h2>
+  <div class="trend-notes-grid" id="trendRow"></div>
   <div class="chart-grid" id="chartGrid"></div>
 
-  <div class="two-col-grid" style="margin-top:32px;">
-    <h2 class="section-title"><span class="num">03</span>Ưu tiên cải tiến</h2>
-    <h2 class="section-title"><span class="num">04</span>Nhận định của hệ thống</h2>
-    <div class="viol-card" id="priorityList"></div>
-    <div class="narrative-card" id="narrativeBlock"></div>
-  </div>
-
-  <h2 class="section-title"><span class="num">05</span>Ghi chú giám sát</h2>
+  <h2 class="section-title"><span class="num">03</span>Ghi chú giám sát</h2>
   <div class="viol-card" id="violCard"></div>
 </div>
 
@@ -623,7 +628,7 @@ function computeYearData(raw, year){
     rowsByQuarter['5s'][unit] = rowsQ;
   });
 
-  return {sections, detailBreakdown, rowsByQuarter};
+  return {sections, detailBreakdown, rowsByQuarter, year};
 }
 
 // ============ RENDER ============
@@ -674,7 +679,7 @@ function renderKPI(yearData, dept, month){
   const grid = document.getElementById('kpiGrid');
   grid.innerHTML = '';
   const curIdx = month-1;
-  window.__KPI_STATS__ = {}; // lưu lại để khối "Tình trạng chung" và "Ưu tiên cải tiến" dùng chung
+  window.__KPI_STATS__ = {}; // lưu lại để khối "Nhận xét nhanh" dùng chung
 
   ['nhandang','vongtay','tenga','atpt','5s'].forEach(key=>{
     const color = SECTION_COLORS[key];
@@ -686,7 +691,14 @@ function renderKPI(yearData, dept, month){
     window.__KPI_STATS__[key] = stat;
 
     if(stat.na){
-      card.innerHTML = `<div class="kpi-left"><div class="kpi-title-row"><span class="kpi-title">${SECTION_TITLES[key]}</span></div><div class="kpi-na">Không áp dụng cho đơn vị này</div></div>`;
+      card.innerHTML = `
+        <div class="kpi-line title-line">
+          <div class="kpi-line-left"><div class="kpi-title">${SECTION_TITLES[key]}</div></div>
+          <div class="kpi-value na">—</div>
+        </div>
+        <div class="kpi-divider"></div>
+        <div class="kpi-line"><span class="kpi-na">Không áp dụng cho đơn vị này</span></div>
+      `;
       grid.appendChild(card);
       return;
     }
@@ -695,27 +707,72 @@ function renderKPI(yearData, dept, month){
     const dPrev = fmtDelta(deltaPrev);
     const tColor = tierColor(tier);
     const prevMonthTag = curIdx-1>=0 ? 'T'+(curIdx) : '—';
+    const isGood = tier==='good';
+    const badgeLabel = isGood ? 'Đạt' : 'Không đạt';
+    const badgeCls = isGood ? 'badge-good' : 'badge-bad';
 
     card.innerHTML = `
-      <div class="kpi-left">
-        <div class="kpi-title-row">
-          <span class="kpi-title">${SECTION_TITLES[key]}</span>
-          ${warn?'<span class="warn-icon" title="Dưới mục tiêu 3 tháng liên tiếp">⚠</span>':''}
+      <div class="kpi-line title-line">
+        <div class="kpi-line-left">
+          <div class="kpi-title">
+            ${SECTION_TITLES[key]}
+            ${warn?'<span class="warn-icon" title="Dưới mục tiêu 3 tháng liên tiếp">⚠</span>':''}
+          </div>
         </div>
-        <div class="kpi-meta">Mục tiêu ≥${Math.round(target*100)}%${sampleCur ? ' · '+sampleCur+' '+SAMPLE_UNIT_LABEL[key] : ''}</div>
-        <span class="kpi-badge" style="background:${tColor}22;color:${tColor}">${tierLabel(tier)}</span>
-      </div>
-      <div class="kpi-right">
         <div class="kpi-value" style="color:${tColor}">${fmtPct(qCur)}</div>
-        <div class="delta-chip ${dPrev.cls}">${prevMonthTag}: ${fmtPct(qPrev)} ${dPrev.text}</div>
+      </div>
+      <div class="kpi-divider"></div>
+      <div class="kpi-line">
+        <span class="kpi-target">Mục tiêu ≥${Math.round(target*100)}%</span>
+        <span class="kpi-badge ${badgeCls}">${badgeLabel}</span>
+      </div>
+      <div class="kpi-line">
+        <span class="kpi-sample">${sampleCur ? sampleCur+' '+SAMPLE_UNIT_LABEL[key] : '—'}</span>
+        <span class="delta-chip ${dPrev.cls}">${prevMonthTag}: ${fmtPct(qPrev)} ${dPrev.text}</span>
       </div>
     `;
     grid.appendChild(card);
   });
 }
 
-function renderPriorityList(yearData, dept, month){
-  const container = document.getElementById('priorityList');
+function renderQuickNote(container, yearData, dept, month){
+  const stats = window.__KPI_STATS__ || {};
+  const applicableKeys = Object.keys(stats).filter(k=>!stats[k].na && stats[k].tier!=='na');
+
+  if(!applicableKeys.length){
+    container.innerHTML = `<h3>💡 Nhận xét nhanh</h3><p class="qn-empty">Chưa đủ dữ liệu giám sát trong tháng này để đưa ra nhận định.</p>`;
+    return;
+  }
+
+  const curVals = applicableKeys.map(k=>stats[k].qCur).filter(v=>v!=null);
+  const prevVals = applicableKeys.map(k=>stats[k].qPrev).filter(v=>v!=null);
+  const avgCur = avg(curVals);
+  const avgPrev = avg(prevVals);
+  const avgDelta = (avgCur!=null && avgPrev!=null) ? avgCur-avgPrev : null;
+  let avgDeltaTxt = '';
+  if(avgDelta!=null){
+    const pts = Math.round(Math.abs(avgDelta)*100);
+    avgDeltaTxt = avgDelta<0 ? `, giảm ${pts}% so với tháng trước` : (avgDelta>0 ? `, tăng ${pts}% so với tháng trước` : ', không đổi so với tháng trước');
+  }
+
+  const cleanTitle = k => SECTION_TITLES[k].replace(/\u00A0/g,' ');
+  const goodKeys = applicableKeys.filter(k=>stats[k].tier==='good');
+  const badKeys = applicableKeys.filter(k=>stats[k].tier!=='good').sort((a,b)=>{
+    const order = {red:0, orange:1, yellow:2};
+    return order[stats[a].tier]-order[stats[b].tier];
+  });
+
+  let bulletsHtml = '';
+  if(goodKeys.length){
+    bulletsHtml += `<li><span class="qn-icon-ok">✅</span> Nhóm ${goodKeys.map(k=>'"'+cleanTitle(k)+'"').join(', ')} duy trì kết quả tốt, đạt mục tiêu.</li>`;
+  }
+  if(badKeys.length){
+    const worstKey = badKeys[0];
+    const warn3 = stats[worstKey].warn;
+    bulletsHtml += `<li><span class="qn-icon-warn">⚠️</span> Nhóm "${cleanTitle(worstKey)}" ${warn3?'dưới mục tiêu 3 tháng liên tiếp, ':''}cần ưu tiên xử lý.</li>`;
+  }
+
+  // Vấn đề ưu tiên: top tiêu chí con thấp nhất dưới mục tiêu trong quý chứa tháng đang chọn
   const quarter = quarterOf(month);
   const items = [];
   ['nhandang','vongtay','tenga','atpt','5s'].forEach(key=>{
@@ -725,84 +782,41 @@ function renderPriorityList(yearData, dept, month){
     if(!dd) return;
     const values = dd[quarter];
     if(!values) return;
-    const prevValues = dd[quarter-1];
     values.forEach((v,i)=>{
       if(v===null || v===undefined) return;
       const target = TARGETS[key];
       if(v>=target) return;
-      const gap = target-v;
-      const prevV = prevValues ? prevValues[i] : null;
-      const delta = (prevV!=null) ? v-prevV : null;
-      items.push({sectionTitle:SECTION_TITLES[key], name:def.names[i], value:v, target, gap, delta, tier:tierOf(v,target)});
+      items.push({name:def.names[i], value:v, target, gap:target-v, tier:tierOf(v,target)});
     });
   });
   items.sort((a,b)=> b.gap-a.gap);
-  const top = items.slice(0,5);
-
-  if(!top.length){
-    container.innerHTML = '<div class="priority-empty">✅ Không có tiêu chí nào dưới mục tiêu trong quý chứa tháng đang chọn — tất cả đều đạt.</div>';
-    return;
-  }
-
-  container.innerHTML = top.map(it=>{
+  const top2 = items.slice(0,2);
+  const priorityHtml = top2.length ? top2.map(it=>{
     const icon = it.tier==='red' ? '🔴' : (it.tier==='orange' ? '🟠' : '🟡');
-    const d = fmtDelta(it.delta);
-    return `
-      <div class="priority-item">
-        <div class="priority-top">
-          <span class="priority-icon">${icon}</span>
-          <span class="priority-name">${it.name}</span>
-          <span class="priority-value" style="color:${tierColor(it.tier)}">${Math.round(it.value*100)}%</span>
-        </div>
-        <div class="priority-sub">${it.sectionTitle} · Thiếu ${Math.round(it.gap*100)}% so với mục tiêu · <span class="${d.cls}">${d.text}</span> so với quý trước</div>
-      </div>
-    `;
-  }).join('');
-}
+    return `<div class="qn-priority-item">${icon} <span><b>${it.name}</b> — ${Math.round(it.value*100)}%, thiếu ${Math.round(it.gap*100)}% so với mục tiêu</span></div>`;
+  }).join('') : '<div class="qn-priority-item">✅ Tất cả tiêu chí con đều đạt mục tiêu trong quý.</div>';
 
-function renderNarrative(yearData, dept, month){
-  const container = document.getElementById('narrativeBlock');
-  const stats = window.__KPI_STATS__ || {};
-  const order = {red:0, orange:1, yellow:2, good:3};
-  let worstKey = null;
-  Object.keys(stats).forEach(key=>{
-    const s = stats[key];
-    if(s.na || s.tier==='na') return; // bỏ qua: không áp dụng HOẶC chưa có dữ liệu tháng này
-    if(worstKey===null || order[s.tier] < order[stats[worstKey].tier]) worstKey = key;
-  });
-
-  const applicableKeys = Object.keys(stats).filter(k=>!stats[k].na && stats[k].tier!=='na');
-  const totalApplicable = applicableKeys.length;
-  const goodCount = applicableKeys.filter(k=> stats[k].tier==='good').length;
-
-  if(!worstKey){
-    container.innerHTML = '<p>💡 Chưa đủ dữ liệu giám sát trong tháng này để đưa ra nhận định.</p>';
-    return;
-  }
-  const s = stats[worstKey];
-  if(s.tier==='good'){
-    container.innerHTML = `<p>💡 Khoa đạt ${goodCount}/${totalApplicable} nội dung giám sát trong tháng ${month}. Tất cả nội dung đều đạt hoặc vượt mục tiêu đề ra.</p>`;
-    return;
+  // Khuyến nghị hành động
+  let recoText = 'Duy trì kết quả hiện tại và tiếp tục giám sát định kỳ theo kế hoạch.';
+  if(badKeys.length){
+    const worstKey = badKeys[0];
+    const worstCritName = top2.length ? top2[0].name : cleanTitle(worstKey);
+    recoText = `Đề nghị khoa rà soát quy trình liên quan đến "${worstCritName}" và tăng cường giám sát chéo trong tháng tới đối với nội dung ${cleanTitle(worstKey).toLowerCase()}.`;
   }
 
-  const quarter = quarterOf(month);
-  const def = BREAKDOWN_DEF[worstKey];
-  const dd = yearData.detailBreakdown[worstKey].depts[dept];
-  const values = dd ? dd[quarter] : null;
-  let worstCritText = '';
-  if(values){
-    let minIdx=-1, minV=null;
-    values.forEach((v,i)=>{ if(v!==null && (minV===null || v<minV)){ minV=v; minIdx=i; } });
-    if(minIdx>=0) worstCritText = `do tỷ lệ tuân thủ "${def.names[minIdx]}" chỉ đạt ${Math.round(minV*100)}%, thấp hơn mục tiêu ${Math.round((TARGETS[worstKey]-minV)*100)} điểm %`;
-  }
-
-  let deltaTxt = 'chưa có dữ liệu tháng trước để so sánh';
-  if(s.deltaPrev!=null){
-    const pts = Math.round(Math.abs(s.deltaPrev)*100);
-    deltaTxt = s.deltaPrev<0 ? `giảm ${pts} điểm %` : (s.deltaPrev>0 ? `tăng ${pts} điểm %` : 'không đổi');
-  }
-
-  container.innerHTML = `<p>💡 Khoa đạt ${goodCount}/${totalApplicable} nội dung giám sát trong tháng ${month}. Nội dung cần ưu tiên cải tiến là <strong>${SECTION_TITLES[worstKey]}</strong> ${worstCritText}. So với tháng trước, nội dung này ${deltaTxt}. Đề nghị khoa rà soát quy trình liên quan và tăng cường kiểm tra nội bộ.</p>`;
+  container.innerHTML = `
+    <h3>💡 Nhận xét nhanh</h3>
+    <p class="qn-summary">Tỷ lệ chung tháng ${month}/${yearData.year} đạt <b>${avgCur!=null?Math.round(avgCur*100)+'%':'—'}</b>${avgDeltaTxt}.</p>
+    <ul class="qn-bullets">${bulletsHtml}</ul>
+    <div>
+      <div class="qn-subhead">Vấn đề ưu tiên</div>
+      ${priorityHtml}
+    </div>
+    <div>
+      <div class="qn-subhead">Khuyến nghị hành động</div>
+      <p class="qn-reco">${recoText}</p>
+    </div>
+  `;
 }
 
 function closeDrillDown(){ document.getElementById('drillModal').classList.remove('open'); }
@@ -956,8 +970,63 @@ function breakdownBarChart(body, names, values, targetVal, sectionKey, dept, qua
   charts.push(chart);
 }
 
-function renderCharts(yearData, dept, month){
+function renderParetoCard(body, raw, dept, month){
+  const quarter = quarterOf(month);
+  const monthIdxs = [(quarter-1)*3, (quarter-1)*3+1, (quarter-1)*3+2];
+  const monthsArr = raw.violations.depts[dept];
+  if(!monthsArr){
+    body.innerHTML = '<div class="chart-empty">Không có dữ liệu lỗi vi phạm cho đơn vị này.</div>';
+    return;
+  }
+  const counts = {};
+  monthIdxs.forEach(idx=>{
+    const cell = monthsArr[idx];
+    if(cell===undefined || cell===null || String(cell).trim()==='') return;
+    String(cell).replace(/[^0-9]/g,'').split('').forEach(d=>{ counts[d]=(counts[d]||0)+1; });
+  });
+  const codes = Object.keys(counts).sort((a,b)=>counts[b]-counts[a]);
+  if(!codes.length){
+    body.innerHTML = '<div class="chart-empty">Không ghi nhận lỗi vi phạm nào trong quý chứa tháng đang chọn.</div>';
+    return;
+  }
+  const total = codes.reduce((s,c)=>s+counts[c],0);
+  let cum = 0;
+  const cumPct = codes.map(c=>{ cum += counts[c]; return Math.round(cum/total*100); });
+  const labels = codes.map(c=>'Lỗi '+c);
+  const fullTexts = codes.map(c=> raw.violations.lookup[parseInt(c,10)] || ('Mã '+c));
+
+  body.innerHTML = '<div class="pareto-wrap"><canvas></canvas></div>';
+  const canvas = body.querySelector('canvas');
+  const ctx = canvas.getContext('2d');
+  const chart = new Chart(ctx, {
+    type:'bar',
+    data:{
+      labels,
+      datasets:[
+        {type:'bar', label:'Số lần', data: codes.map(c=>counts[c]), backgroundColor:'#B8402A', borderRadius:4, yAxisID:'yCount', order:2},
+        {type:'line', label:'% tích lũy', data: cumPct, borderColor:'#004C85', backgroundColor:'#004C85', borderWidth:2, borderDash:[4,3], pointRadius:3, tension:0.25, yAxisID:'yPct', order:1}
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{display:true, position:'bottom', labels:{font:{family:"'Inter', sans-serif", size:11}, boxWidth:12}},
+        tooltip:{callbacks:{afterLabel:(c)=> c.datasetIndex===0 ? fullTexts[c.dataIndex] : ''}}
+      },
+      scales:{
+        yCount:{position:'left', beginAtZero:true, ticks:{font:{family:"'Inter', sans-serif", size:11}}},
+        yPct:{position:'right', min:0, max:100, grid:{drawOnChartArea:false}, ticks:{callback:v=>v+'%', font:{family:"'Inter', sans-serif", size:11}}},
+        x:{ticks:{font:{family:"'Inter', sans-serif", size:11}}}
+      }
+    }
+  });
+  charts.push(chart);
+}
+
+function renderCharts(yearData, dept, month, raw){
+  const trendRow = document.getElementById('trendRow');
   const grid = document.getElementById('chartGrid');
+  trendRow.innerHTML = '';
   grid.innerHTML = '';
   destroyCharts();
   const quarter = quarterOf(month);
@@ -965,11 +1034,20 @@ function renderCharts(yearData, dept, month){
   const wideCard = document.createElement('div');
   wideCard.className = 'card wide';
   wideCard.innerHTML = `<h3>Xu hướng</h3><div class="body"></div>`;
-  grid.appendChild(wideCard);
+  trendRow.appendChild(wideCard);
   try{
     overviewTrendChart(wideCard.querySelector('.body'), yearData, dept);
   } catch(err){
     wideCard.querySelector('.body').innerHTML = `<div class="chart-empty">Không vẽ được biểu đồ (${err.message}).</div>`;
+  }
+
+  const quickNoteCard = document.createElement('div');
+  quickNoteCard.className = 'quicknote-card';
+  trendRow.appendChild(quickNoteCard);
+  try{
+    renderQuickNote(quickNoteCard, yearData, dept, month);
+  } catch(err){
+    quickNoteCard.innerHTML = `<h3>💡 Nhận xét nhanh</h3><p class="qn-empty">Không tạo được nhận xét (${err.message}).</p>`;
   }
 
   ['nhandang','vongtay','tenga','atpt','5s'].forEach(key=>{
@@ -997,6 +1075,16 @@ function renderCharts(yearData, dept, month){
       body.innerHTML = `<div class="chart-empty">Không vẽ được biểu đồ (${err.message}).</div>`;
     }
   });
+
+  const paretoCard = document.createElement('div');
+  paretoCard.className = 'card';
+  paretoCard.innerHTML = `<h3>Lỗi vi phạm — Biểu đồ Pareto</h3><div class="body"></div>`;
+  grid.appendChild(paretoCard);
+  try{
+    renderParetoCard(paretoCard.querySelector('.body'), raw, dept, month);
+  } catch(err){
+    paretoCard.querySelector('.body').innerHTML = `<div class="chart-empty">Không vẽ được biểu đồ (${err.message}).</div>`;
+  }
 }
 
 function renderViol(raw, dept, month){
@@ -1056,11 +1144,7 @@ function renderAll(){
   if(!RAW || !YEAR_DATA || !STATE.dept) return;
   document.getElementById('unitNameOut').textContent = STATE.dept;
   renderKPI(YEAR_DATA, STATE.dept, STATE.month);          // cũng set window.__KPI_STATS__
-  renderCharts(YEAR_DATA, STATE.dept, STATE.month);
-  try{ renderPriorityList(YEAR_DATA, STATE.dept, STATE.month); }
-  catch(err){ document.getElementById('priorityList').innerHTML = `<div class="chart-empty">Không tải được (${err.message}).</div>`; }
-  try{ renderNarrative(YEAR_DATA, STATE.dept, STATE.month); }
-  catch(err){ document.getElementById('narrativeBlock').innerHTML = `<p>Không tạo được nhận định (${err.message}).</p>`; }
+  renderCharts(YEAR_DATA, STATE.dept, STATE.month, RAW);
   renderViol(RAW, STATE.dept, STATE.month);
 }
 
