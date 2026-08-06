@@ -971,22 +971,20 @@ function breakdownBarChart(body, names, values, targetVal, sectionKey, dept, qua
 }
 
 function renderParetoCard(body, raw, dept, month){
-  const quarter = quarterOf(month);
-  const monthIdxs = [(quarter-1)*3, (quarter-1)*3+1, (quarter-1)*3+2];
   const monthsArr = raw.violations.depts[dept];
   if(!monthsArr){
     body.innerHTML = '<div class="chart-empty">Không có dữ liệu lỗi vi phạm cho đơn vị này.</div>';
     return;
   }
   const counts = {};
-  monthIdxs.forEach(idx=>{
+  for(let idx=0; idx<12; idx++){
     const cell = monthsArr[idx];
-    if(cell===undefined || cell===null || String(cell).trim()==='') return;
+    if(cell===undefined || cell===null || String(cell).trim()==='') continue;
     String(cell).replace(/[^0-9]/g,'').split('').forEach(d=>{ counts[d]=(counts[d]||0)+1; });
-  });
+  }
   const codes = Object.keys(counts).sort((a,b)=>counts[b]-counts[a]);
   if(!codes.length){
-    body.innerHTML = '<div class="chart-empty">Không ghi nhận lỗi vi phạm nào trong quý chứa tháng đang chọn.</div>';
+    body.innerHTML = '<div class="chart-empty">Không ghi nhận lỗi vi phạm nào trong năm đang chọn.</div>';
     return;
   }
   const total = codes.reduce((s,c)=>s+counts[c],0);
@@ -1078,7 +1076,7 @@ function renderCharts(yearData, dept, month, raw){
 
   const paretoCard = document.createElement('div');
   paretoCard.className = 'card';
-  paretoCard.innerHTML = `<h3>Lỗi vi phạm — Biểu đồ Pareto</h3><div class="body"></div>`;
+  paretoCard.innerHTML = `<h3>Lỗi vi phạm qua các tháng</h3><div class="body"></div>`;
   grid.appendChild(paretoCard);
   try{
     renderParetoCard(paretoCard.querySelector('.body'), raw, dept, month);
