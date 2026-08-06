@@ -692,6 +692,18 @@ function breakdownBarChart(body, names, values, targetVal, sectionKey, dept, qua
   charts.push(chart);
 }
 
+function wrapMultiLine(text, maxLineLen){
+  const words = String(text).trim().split(/\s+/);
+  const lines = [];
+  let cur = '';
+  words.forEach(w=>{
+    if(cur && (cur+' '+w).length > maxLineLen){ lines.push(cur); cur = w; }
+    else cur = cur ? cur+' '+w : w;
+  });
+  if(cur) lines.push(cur);
+  return lines.slice(0,3); // tối đa 3 dòng cho gọn trục X
+}
+
 function renderParetoCard(body, raw, dept, month){
   const monthsArr = raw.violations.depts[dept];
   if(!monthsArr){
@@ -712,8 +724,8 @@ function renderParetoCard(body, raw, dept, month){
   const total = codes.reduce((s,c)=>s+counts[c],0);
   let cum = 0;
   const cumPct = codes.map(c=>{ cum += counts[c]; return Math.round(cum/total*100); });
-  const labels = codes.map(c=>'Lỗi '+c);
   const fullTexts = codes.map(c=> raw.violations.lookup[parseInt(c,10)] || ('Mã '+c));
+  const labels = fullTexts.map(t=> wrapMultiLine(t, 13));
 
   body.innerHTML = '<div class="pareto-wrap"><canvas></canvas></div>';
   const canvas = body.querySelector('canvas');
@@ -731,12 +743,12 @@ function renderParetoCard(body, raw, dept, month){
       responsive:true, maintainAspectRatio:false,
       plugins:{
         legend:{display:true, position:'bottom', labels:{font:{family:"'Inter', sans-serif", size:11}, boxWidth:12}},
-        tooltip:{callbacks:{afterLabel:(c)=> c.datasetIndex===0 ? fullTexts[c.dataIndex] : ''}}
+        tooltip:{callbacks:{title:(items)=> 'Mã lỗi '+codes[items[0].dataIndex]}}
       },
       scales:{
         yCount:{position:'left', beginAtZero:true, ticks:{font:{family:"'Inter', sans-serif", size:11}}},
         yPct:{position:'right', min:0, max:100, grid:{drawOnChartArea:false}, ticks:{callback:v=>v+'%', font:{family:"'Inter', sans-serif", size:11}}},
-        x:{ticks:{font:{family:"'Inter', sans-serif", size:11}}}
+        x:{ticks:{font:{family:"'Inter', sans-serif", size:10.5}, maxRotation:0, minRotation:0}}
       }
     }
   });
@@ -812,47 +824,60 @@ function renderViol(raw, dept, month){
   const monthsArr = raw.violations.depts[dept];
   const labels = ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'];
   const cell = monthsArr ? monthsArr[month-1] : null;
+  const hasCurrentMonth = monthsArr && cell && String(cell).trim()!=='';
 
-  if(!monthsArr || !cell || String(cell).trim()===''){
-    card.innerHTML = `<div class="viol-empty">Tháng ${month}: không ghi nhận lưu ý nào trong quá trình giám sát đối với đơn vị này.</div>`;
-    return;
+  // Gộp toàn bộ ghi chú cả năm (dùng cho bảng chi tiết + kiểm tra có dữ liệu để hiện nút hay không)
+  let fullRows = '';
+  let hasAnyYear = false;
+  if(monthsArr){
+    monthsArr.forEach((c,i)=>{
+      if(c===undefined || c===null || String(c).trim()==='') return;
+      String(c).replace(/[^0-9]/g,'').split('').forEach(d=>{
+        const text = raw.violations.lookup[parseInt(d,10)] || ('Ghi chú: '+c);
+        fullRows += `<tr><td><span class="month-chip">${labels[i]}</span></td><td>${text}</td></tr>`;
+        hasAnyYear = true;
+      });
+    });
   }
 
-  const digits = String(cell).replace(/[^0-9]/g,'').split('');
-  const counts = {};
-  digits.forEach(d=>{ counts[d] = (counts[d]||0)+1; });
-  const total = digits.length;
-  const top3 = Object.keys(counts).sort((a,b)=>counts[b]-counts[a]).slice(0,3);
-  const top3Html = top3.map(code=>{
-    const text = raw.violations.lookup[parseInt(code,10)] || ('Ghi chú: '+cell);
-    return `<li>${counts[code]} lượt — ${text}</li>`;
-  }).join('');
+  let bodyHtml;
+  if(!hasCurrentMonth){
+    bodyHtml = `<div class="viol-empty">Tháng ${month}: không ghi nhận lưu ý nào trong quá trình giám sát đối với đơn vị này.</div>`;
+  } else {
+    const digits = String(cell).replace(/[^0-9]/g,'').split('');
+    const counts = {};
+    digits.forEach(d=>{ counts[d] = (counts[d]||0)+1; });
+    const total = digits.length;
+    const top3 = Object.keys(counts).sort((a,b)=>counts[b]-counts[a]).slice(0,3);
+    const top3Html = top3.map(code=>{
+      const text = raw.violations.lookup[parseInt(code,10)] || ('Ghi chú: '+cell);
+      return `<li>${counts[code]} lượt — ${text}</li>`;
+    }).join('');
+    bodyHtml = `
+      <div class="viol-month">Tháng ${month}</div>
+      <div class="viol-count">Có ${total} ghi chú</div>
+      <ul class="viol-top3">${top3Html}</ul>
+    `;
+  }
 
-  let fullRows = '';
-  monthsArr.forEach((c,i)=>{
-    if(c===undefined || c===null || String(c).trim()==='') return;
-    String(c).replace(/[^0-9]/g,'').split('').forEach(d=>{
-      const text = raw.violations.lookup[parseInt(d,10)] || ('Ghi chú: '+c);
-      fullRows += `<tr><td><span class="month-chip">${labels[i]}</span></td><td>${text}</td></tr>`;
-    });
-  });
+  const toggleBtnHtml = hasAnyYear ? `<button id="violToggle" class="viol-toggle-btn">Xem chi tiết cả năm</button>` : '';
 
   card.innerHTML = `
-    <div class="viol-month">Tháng ${month}</div>
-    <div class="viol-count">Có ${total} ghi chú</div>
-    <ul class="viol-top3">${top3Html}</ul>
-    <button id="violToggle" class="viol-toggle-btn">Xem chi tiết cả năm</button>
+    ${bodyHtml}
+    ${toggleBtnHtml}
     <div id="violDetail" class="viol-detail" style="display:none">
       <table class="viol-table"><thead><tr><th style="width:110px">Tháng</th><th>Lưu ý ghi nhận trong giám sát</th></tr></thead><tbody>${fullRows}</tbody></table>
     </div>
   `;
-  const btn = document.getElementById('violToggle');
-  btn.onclick = ()=>{
-    const det = document.getElementById('violDetail');
-    const show = det.style.display==='none';
-    det.style.display = show?'block':'none';
-    btn.textContent = show?'Ẩn chi tiết':'Xem chi tiết cả năm';
-  };
+  if(hasAnyYear){
+    const btn = document.getElementById('violToggle');
+    btn.onclick = ()=>{
+      const det = document.getElementById('violDetail');
+      const show = det.style.display==='none';
+      det.style.display = show?'block':'none';
+      btn.textContent = show?'Ẩn chi tiết':'Xem chi tiết cả năm';
+    };
+  }
 }
 
 // ============ TRẠNG THÁI & KHỞI ĐỘNG ============
@@ -1065,8 +1090,8 @@ body{
 @media(max-width:480px){.trend-canvas-wrap{height:170px;}}
 .breakdown-canvas-wrap{position:relative;height:190px;}
 @media(max-width:480px){.breakdown-canvas-wrap{height:240px;}}
-.pareto-wrap{position:relative;height:190px;}
-@media(max-width:480px){.pareto-wrap{height:220px;}}
+.pareto-wrap{position:relative;height:220px;}
+@media(max-width:480px){.pareto-wrap{height:260px;}}
 .card:not(.wide) .body, .card:not(.wide) .chart-empty{min-height:190px;display:flex;flex-direction:column;justify-content:center;}
 @media(max-width:480px){.card:not(.wide) .body, .card:not(.wide) .chart-empty{min-height:240px;}}
 .legend{display:flex;gap:14px;font-size:var(--fs-caption);color:var(--muted);margin-top:10px;flex-wrap:wrap;justify-content:center;}
