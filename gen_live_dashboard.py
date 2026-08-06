@@ -205,7 +205,15 @@ async function loadRaw(urls){
     if(!unit) continue;
     const months = [];
     for(let m=1;m<=12;m++) months.push(violRows[r][m]);
-    if(months.some(v=>v!==undefined && v!==null && String(v).trim()!=='')) violDepts[unit] = months;
+    if(!months.some(v=>v!==undefined && v!==null && String(v).trim()!=='')) continue;
+
+    // Gộp (không ghi đè) trong trường hợp 1 đơn vị có nhiều dòng (nhiều đợt giám sát khác nhau)
+    if(!violDepts[unit]) violDepts[unit] = new Array(12).fill('');
+    for(let m=0;m<12;m++){
+      const v = months[m];
+      if(v===undefined || v===null || String(v).trim()==='') continue;
+      violDepts[unit][m] = violDepts[unit][m] ? (violDepts[unit][m] + ',' + v) : String(v);
+    }
   }
 
   return {
@@ -692,8 +700,10 @@ function breakdownBarChart(body, names, values, targetVal, sectionKey, dept, qua
   charts.push(chart);
 }
 
-function wrapMultiLine(text, maxLineLen){
-  const words = String(text).trim().split(/\s+/);
+function wrapMultiLine(text, maxLineLen, maxChars){
+  let t = String(text).trim();
+  if(maxChars && t.length > maxChars) t = t.slice(0, maxChars-1).trim() + '…';
+  const words = t.split(/\s+/);
   const lines = [];
   let cur = '';
   words.forEach(w=>{
@@ -701,7 +711,7 @@ function wrapMultiLine(text, maxLineLen){
     else cur = cur ? cur+' '+w : w;
   });
   if(cur) lines.push(cur);
-  return lines.slice(0,3); // tối đa 3 dòng cho gọn trục X
+  return lines;
 }
 
 function renderParetoCard(body, raw, dept, month){
@@ -725,7 +735,7 @@ function renderParetoCard(body, raw, dept, month){
   let cum = 0;
   const cumPct = codes.map(c=>{ cum += counts[c]; return Math.round(cum/total*100); });
   const fullTexts = codes.map(c=> raw.violations.lookup[parseInt(c,10)] || ('Mã '+c));
-  const labels = fullTexts.map(t=> wrapMultiLine(t, 13));
+  const labels = fullTexts.map(t=> wrapMultiLine(t, 13, 45));
 
   body.innerHTML = '<div class="pareto-wrap"><canvas></canvas></div>';
   const canvas = body.querySelector('canvas');
@@ -743,7 +753,10 @@ function renderParetoCard(body, raw, dept, month){
       responsive:true, maintainAspectRatio:false,
       plugins:{
         legend:{display:true, position:'bottom', labels:{font:{family:"'Inter', sans-serif", size:11}, boxWidth:12}},
-        tooltip:{callbacks:{title:(items)=> 'Mã lỗi '+codes[items[0].dataIndex]}}
+        tooltip:{callbacks:{
+          title:(items)=> 'Mã lỗi '+codes[items[0].dataIndex],
+          afterLabel:(c)=> c.datasetIndex===0 ? fullTexts[c.dataIndex] : ''
+        }}
       },
       scales:{
         yCount:{position:'left', beginAtZero:true, ticks:{font:{family:"'Inter', sans-serif", size:11}}},
@@ -1090,8 +1103,8 @@ body{
 @media(max-width:480px){.trend-canvas-wrap{height:170px;}}
 .breakdown-canvas-wrap{position:relative;height:190px;}
 @media(max-width:480px){.breakdown-canvas-wrap{height:240px;}}
-.pareto-wrap{position:relative;height:220px;}
-@media(max-width:480px){.pareto-wrap{height:260px;}}
+.pareto-wrap{position:relative;height:235px;}
+@media(max-width:480px){.pareto-wrap{height:275px;}}
 .card:not(.wide) .body, .card:not(.wide) .chart-empty{min-height:190px;display:flex;flex-direction:column;justify-content:center;}
 @media(max-width:480px){.card:not(.wide) .body, .card:not(.wide) .chart-empty{min-height:240px;}}
 .legend{display:flex;gap:14px;font-size:var(--fs-caption);color:var(--muted);margin-top:10px;flex-wrap:wrap;justify-content:center;}
