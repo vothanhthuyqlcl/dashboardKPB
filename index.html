@@ -199,7 +199,15 @@ table.viol-table{width:100%;border-collapse:collapse;font-size:var(--fs-small);}
 table.viol-table th{text-align:left;font-size:var(--fs-caption);font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding:8px;border-bottom:1.5px solid var(--line);}
 table.viol-table td{padding:9px 8px;border-bottom:1px solid var(--line);}
 table.viol-table tr:last-child td{border-bottom:none;}
-.month-chip{font-size:var(--fs-caption);background:var(--bg);color:#004C85;padding:3px 8px;border-radius:4px;font-weight:600;}
+.month-chip{font-size:var(--fs-caption);background:var(--bg);color:#004C85;padding:3px 8px;border-radius:4px;font-weight:600;white-space:nowrap;}
+.viol-detail table.viol-table td{vertical-align:top;}
+.viol-detail table.viol-table th:first-child{width:110px;}
+@media(max-width:480px){.viol-detail table.viol-table th:first-child{width:84px;}}
+.viol-month-count{display:block;font-size:var(--fs-caption);color:var(--muted);margin-top:4px;padding-left:8px;}
+ul.viol-list{margin:0;padding-left:18px;}
+ul.viol-list li{margin:0 0 4px;line-height:1.45;}
+ul.viol-list li:last-child{margin-bottom:0;}
+.viol-times{color:var(--muted);font-size:var(--fs-caption);}
 
 /* --- Modal drill-down --- */
 .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(27,39,51,0.5);z-index:100;align-items:center;justify-content:center;padding:20px;}
@@ -1208,11 +1216,17 @@ function renderViol(raw, dept, period){
   let hasAnyYear = false;
   if(monthsArr){
     monthsArr.forEach((c,i)=>{
-      violCodes(c).forEach(d=>{
+      // Mỗi tháng một dòng: bên trái tháng và số lỗi, bên phải liệt kê các lỗi (mã trùng gộp thành "n lượt")
+      const codes = violCodes(c);
+      if(!codes.length) return;
+      hasAnyYear = true;
+      const cnt = {}; const order = [];
+      codes.forEach(d=>{ if(!(d in cnt)){ cnt[d]=0; order.push(d); } cnt[d]++; });
+      const items = order.map(d=>{
         const text = raw.violations.lookup[parseInt(d,10)] || ('Mã lỗi '+d);
-        fullRows += `<tr><td><span class="month-chip">${labels[i]}</span></td><td>${text}</td></tr>`;
-        hasAnyYear = true;
-      });
+        return `<li>${text}${cnt[d]>1 ? ` <span class="viol-times">(${cnt[d]} lượt)</span>` : ''}</li>`;
+      }).join('');
+      fullRows += `<tr><td class="viol-month-cell"><span class="month-chip">${labels[i]}</span><span class="viol-month-count">${codes.length} lỗi</span></td><td><ul class="viol-list">${items}</ul></td></tr>`;
     });
   }
 
@@ -1254,7 +1268,7 @@ function renderViol(raw, dept, period){
     ${bodyHtml}
     ${toggleBtnHtml}
     <div id="violDetail" class="viol-detail" style="display:none">
-      <table class="viol-table"><thead><tr><th style="width:110px">Tháng</th><th>Lưu ý ghi nhận trong giám sát</th></tr></thead><tbody>${fullRows}</tbody></table>
+      <table class="viol-table"><thead><tr><th>Tháng</th><th>Lưu ý ghi nhận trong giám sát</th></tr></thead><tbody>${fullRows}</tbody></table>
     </div>
   `;
   if(hasAnyYear){
